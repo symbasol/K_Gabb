@@ -1,0 +1,629 @@
+.roboto {
+    font-family: "Roboto", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 500;
+    font-style: normal;
+    font-variation-settings:
+        "width" 100;
+}
+
+
+.rounded-square {
+    border-radius: 20px;
+}
+
+.circle {
+    border-radius: 100%;
+}
+
+.hexagon {
+    clip-path: polygon(
+        25% 6%,
+        75% 6%,
+        100% 50%,
+        75% 94%,
+        25% 94%,
+        0% 50%
+    );
+}
+
+.pentagon {
+    clip-path: polygon(
+        50% 4%,
+        96% 36%,
+        79% 92%,
+        21% 92%,
+        4% 36%
+    );
+}
+
+/* =========================
+   GENERAL
+   ========================= */
+
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+html,
+body {
+    margin: 0;
+    padding: 0;
+
+    font-family: "Roboto", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 500;
+    font-style: normal;
+    font-variation-settings:
+        "width" 100;
+}
+
+main {
+    width: 97.5vw;
+}
+
+
+/* =========================
+   HEADER
+   ========================= */
+
+.page-header {
+    margin: 0;
+    padding: 0;
+}
+
+
+/* Background of header */
+
+.page-header-div {
+    position: fixed;
+
+    top: 0;
+    left: 0;
+
+    width: 100vw;
+    height: 58px;
+
+    margin: 0;
+    padding: 0;
+
+    background-color: transparent;
+
+    z-index: 149;
+
+    transition:
+        background-color 0.3s ease,
+        box-shadow 0.3s ease;
+}
+
+
+/* Header when scrolling */
+
+body.scrolled .page-header-div {
+    background-color: rgba(255, 255, 255, 0.95);
+
+    box-shadow:
+        0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+
+/* =========================
+   TITLE
+   ========================= */
+
+/* =========================
+   TITLE
+   ========================= */
+
+.title {
+    display: flex;
+
+    align-items: center;
+
+    position: fixed;
+
+    top: 15px;
+    left: 120px;
+
+    width: 100%;
+
+    margin: 0;
+
+    background: transparent;
+
+    font-size: 25px;
+
+    z-index: 150;
+
+    transition: color 0.3s ease;
+}
+
+/* Make the title link look like normal text */
+.title a {
+    color: #fff;
+    text-decoration: none;
+}
+
+.title a:visited {
+    color: #fff;
+}
+
+.title a:hover {
+    color: #fff;
+    text-decoration: none;
+}
+
+/* Title becomes blue when scrolling */
+body.scrolled .title a {
+    color: #3498db;
+}
+
+/* =========================
+   LOGO
+   ========================= */
+
+.logo {
+    display: flex;
+
+    gap: 10px;
+
+    position: fixed;
+
+    top: 5px;
+    left: 60px;
+
+    z-index: 151;
+
+    width: 50px;
+    height: 50px;
+}
+
+
+/* =========================
+   HAMBURGER BUTTON
+   ========================= */
+
+.menu-btn {
+    position: fixed;
+
+    top: 20px;
+    left: 20px;
+
+    width: 20px;
+    height: 20px;
+
+    margin-right: 20px;
+    padding: 0;
+
+    background: none;
+    border: none;
+
+    cursor: pointer;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+
+    z-index: 1000;
+
+    transition:
+        transform 0.2s ease;
+}
+
+
+/* Hamburger bars */
+
+.menu-btn span {
+    display: block;
+
+    width: 25px;
+    height: 3px;
+
+    background: #fff;
+
+    border-radius: 5px;
+
+    transition:
+        transform 0.3s cubic-bezier(0.25, 0.8, 0.25, 1),
+        opacity 0.3s ease,
+        background-color 0.3s ease;
+}
+
+
+/* Hamburger becomes black when scrolling */
+
+body.scrolled .menu-btn span {
+    background: #000;
+}
+
+
+/* =========================
+   HAMBURGER HOVER
+   ========================= */
+
+.menu-btn:hover {
+    transform: scale(1.05);
+}
+
+.menu-btn:hover span {
+    background: #3498db !important;
+}
+
+
+/* =========================
+   HAMBURGER → X
+   ========================= */
+
+.menu-btn.active span:nth-child(1) {
+    transform: translateY(8.5px) rotate(45deg);
+    color: black;
+}
+
+.menu-btn.active span:nth-child(2) {
+    opacity: 0;
+}
+
+.menu-btn.active span:nth-child(3) {
+    transform: translateY(-8.5px) rotate(-45deg);
+    color: black;
+}
+
+/* Hamburger becomes black when sidebar is open */
+.menu-btn.active span {
+    background: #000;
+}
+
+/* =========================
+   SIDEBAR
+   ========================= */
+
+.sidebar {
+    position: fixed;
+
+    top: 0;
+    left: -225px;
+
+    width: 175px;
+    height: 100vh;
+
+    padding: 60px 25px 25px;
+
+    background: #ffffff;
+
+    box-shadow:
+        2px 0 10px rgba(0, 0, 0, 0.15);
+
+    overflow-y: auto;
+
+    z-index: 200;
+
+    transition:
+        left 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+
+/* Sidebar open */
+
+.sidebar.active {
+    left: 0;
+}
+
+
+/* =========================
+   SIDEBAR LINKS
+   ========================= */
+
+.sidebar a {
+    display: block;
+
+    padding: 15px 20px;
+
+    color: #000;
+
+    text-decoration: none;
+
+    font-size: 16px;
+
+    transition:
+        all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+.sidebar a:hover {
+    background: #f2f2f2;
+
+    padding-left: 30px;
+
+    color: #3498db;
+}
+
+
+/* =========================
+   GREY OVERLAY
+   ========================= */
+
+#grey {
+    position: fixed;
+
+    top: 0;
+    left: 0;
+
+    width: 100vw;
+    height: 100vh;
+
+    background-color: rgba(0, 0, 0, 0);
+
+    z-index: 199;
+
+    opacity: 0;
+
+    visibility: hidden;
+
+    transition:
+        opacity 0.3s ease,
+        background-color 0.3s ease;
+}
+
+
+/* Overlay visible */
+
+#grey.active {
+    background-color: rgba(0, 0, 0, 0.5);
+
+    opacity: 1;
+
+    visibility: visible;
+}
+
+
+/* =========================
+   BANNER
+   ========================= */
+
+.banner-container {
+    position: relative;
+
+    left: 0;
+
+    display: flex;
+
+    justify-content: center;
+    align-items: center;
+
+    color: white;
+
+    margin: 0;
+    padding: 0;
+}
+
+
+.banner-container img {
+    display: block;
+
+    width: 100%;
+    height: auto;
+
+    margin: 0;
+    padding: 0;
+
+    filter: brightness(50%);
+}
+
+
+/* =========================
+   BANNER TEXT
+   ========================= */
+
+.banner-container .text-wrapper {
+    position: absolute;
+
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
+}
+
+
+.banner-container .text-wrapper .text {
+    font-size: 60px;
+
+    font-family: "Roboto", sans-serif;
+
+    font-weight: 500;
+}
+
+
+.banner-container .text-wrapper .box {
+    width: 130px;
+    height: 10px;
+
+    background-color: #00ffff;
+}
+
+
+/* =========================
+   CONTENT
+   ========================= */
+
+main {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    box-sizing: border-box;
+}
+
+.content {
+    position: relative;
+
+    width: 100%;
+    max-width: 1200px;
+
+    margin: 0 auto;
+    padding: 44px;
+
+    box-sizing: border-box;
+
+    top: auto;
+    left: auto;
+}
+
+
+/*
+.content.active {
+    left: 258px;
+}
+*/
+
+.images {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 30px;
+    width: 100%;
+
+    margin-top: 60px;
+    margin-bottom: 30px;
+}
+
+/* Animated rainbow border */
+@keyframes rainbowBorder {
+    0% {
+        border-image-source: linear-gradient(45deg, red, orange, yellow, green, cyan, blue, violet);
+    }
+    50% {
+        border-image-source: linear-gradient(225deg, violet, blue, cyan, green, yellow, orange, red);
+    }
+    100% {
+        border-image-source: linear-gradient(45deg, red, orange, yellow, green, cyan, blue, violet);
+    }
+}
+
+/* Animated rainbow glow */
+@keyframes rainbowGlow {
+    0% {
+        box-shadow: 0 0 20px rgba(255, 0, 0, 0.35);
+    }
+    20% {
+        box-shadow: 0 0 25px rgba(255, 165, 0, 0.35);
+    }
+    40% {
+        box-shadow: 0 0 30px rgba(255, 255, 0, 0.35);
+    }
+    60% {
+        box-shadow: 0 0 35px rgba(0, 255, 0, 0.35);
+    }
+    80% {
+        box-shadow: 0 0 40px rgba(0, 128, 255, 0.35);
+    }
+    100% {
+        box-shadow: 0 0 20px rgba(128, 0, 255, 0.35);
+    }
+}
+
+.icons {
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    object-fit: cover;
+    border-radius: 10%;
+    cursor: pointer;
+
+    transition:
+        transform 0.45s cubic-bezier(0.22, 0.61, 0.36, 1),
+        box-shadow 0.6s ease;
+}
+
+.icons:hover {
+    transform: scale(1.06);
+
+    /* Animated rainbow glow only */
+    animation: rainbowGlow 2.5s linear infinite;
+}
+
+
+.intro-section {
+    display: flex;
+
+    align-items: center;
+
+    gap: 60px;
+
+    width: 100%;
+}
+
+.gallery {
+    position: relative;
+
+    flex: 1;
+
+    width: 100%;
+    max-width: 500px;
+
+    overflow: hidden;
+    border-radius: 15px;
+
+    margin: 0;
+}
+
+.intro-text {
+    flex: 1;
+
+    max-width: 500px;
+}
+
+.intro-text h2 {
+    font-size: 32px;
+    margin-top: 0;
+}
+
+.intro-text p {
+    font-size: 18px;
+    line-height: 1.7;
+}
+
+.gallery-track {
+    display: flex;
+
+    transition: transform 0.5s ease;
+}
+
+.gallery-track img {
+    flex: 0 0 100%;
+    width: 100%;
+
+    height: 100%;
+    object-fit: cover;
+}
+
+.gallery button {
+    position: absolute;
+
+    top: 50%;
+    transform: translateY(-50%);
+
+    width: 45px;
+    height: 45px;
+
+    border: none;
+    border-radius: 50%;
+
+    background: rgba(0, 0, 0, 0.5);
+    color: white;
+
+    font-size: 20px;
+    cursor: pointer;
+
+    transition: background 0.2s ease;
+}
+
+.gallery button:hover {
+    background: rgba(0, 0, 0, 0.8);
+}
+
+#prev {
+    left: 15px;
+}
+
+#next {
+    right: 15px;
+}
