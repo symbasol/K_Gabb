@@ -1,0 +1,465 @@
+.roboto {
+    font-family: "Roboto", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 500;
+    font-style: normal;
+    font-variation-settings:
+        "width" 100;
+}
+
+
+/* =========================
+   GENERAL
+   ========================= */
+html,
+body {
+    margin: 0;
+    padding: 0;
+
+    overflow-x: hidden;
+
+    font-family: "Roboto", sans-serif;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+.content {
+    position: absolute;
+    top: 360px;
+    left: 16px;
+
+    width: calc(100% - 32px);
+    padding: 44px;
+}
+
+main {
+    width: 100%;
+
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+
+    column-gap: 60px;
+    row-gap: 40px;
+}
+/* =========================
+   HEADER
+   ========================= */
+
+.page-header {
+    margin: 0;
+    padding: 0;
+}
+
+
+/* Background of header */
+
+.page-header-div {
+    position: fixed;
+
+    top: 0;
+    left: 0;
+
+    width: 100vw;
+    height: 58px;
+
+    margin: 0;
+    padding: 0;
+
+    background-color: transparent;
+
+    z-index: 149;
+
+    transition:
+        background-color 0.3s ease,
+        box-shadow 0.3s ease;
+}
+
+
+/* Header when scrolling */
+
+body.scrolled .page-header-div {
+    background-color: rgba(255, 255, 255, 0.95);
+
+    box-shadow:
+        0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+
+/* =========================
+   TITLE
+   ========================= */
+
+/* =========================
+   TITLE
+   ========================= */
+
+.title {
+    display: flex;
+
+    align-items: center;
+
+    position: fixed;
+
+    top: 15px;
+    left: 120px;
+
+    width: 100%;
+
+    margin: 0;
+
+    background: transparent;
+
+    font-size: 25px;
+
+    z-index: 150;
+
+    transition: color 0.3s ease;
+}
+
+/* Make the title link look like normal text */
+.title a {
+    color: #fff;
+    text-decoration: none;
+}
+
+.title a:visited {
+    color: #fff;
+}
+
+.title a:hover {
+    color: #fff;
+    text-decoration: none;
+}
+
+/* Title becomes blue when scrolling */
+body.scrolled .title a {
+    color: #3498db;
+}
+
+
+/* =========================
+   LOGO
+   ========================= */
+
+.logo {
+    display: flex;
+
+    gap: 10px;
+
+    position: fixed;
+
+    top: 5px;
+    left: 60px;
+
+    z-index: 151;
+
+    width: 50px;
+    height: 50px;
+}
+
+
+/* =========================
+   HAMBURGER BUTTON
+   ========================= */
+
+.menu-btn {
+    position: fixed;
+
+    top: 20px;
+    left: 20px;
+
+    width: 20px;
+    height: 20px;
+
+    margin-right: 20px;
+    padding: 0;
+
+    background: none;
+    border: none;
+
+    cursor: pointer;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+
+    z-index: 1000;
+
+    transition:
+        transform 0.2s ease;
+}
+
+
+/* Hamburger bars */
+
+.menu-btn span {
+    display: block;
+
+    width: 25px;
+    height: 3px;
+
+    background: #fff;
+
+    border-radius: 5px;
+
+    transition:
+        transform 0.3s cubic-bezier(0.25, 0.8, 0.25, 1),
+        opacity 0.3s ease,
+        background-color 0.3s ease;
+}
+
+
+/* Hamburger becomes black when scrolling */
+
+body.scrolled .menu-btn span {
+    background: #000;
+}
+
+
+/* =========================
+   HAMBURGER HOVER
+   ========================= */
+
+.menu-btn:hover {
+    transform: scale(1.05);
+}
+
+.menu-btn:hover span {
+    background: #3498db !important;
+}
+
+
+/* =========================
+   HAMBURGER → X
+   ========================= */
+
+.menu-btn.active span:nth-child(1) {
+    transform: translateY(8.5px) rotate(45deg);
+    color: black;
+}
+
+.menu-btn.active span:nth-child(2) {
+    opacity: 0;
+}
+
+.menu-btn.active span:nth-child(3) {
+    transform: translateY(-8.5px) rotate(-45deg);
+    color: black;
+}
+
+/* Hamburger becomes black when sidebar is open */
+.menu-btn.active span {
+    background: #000;
+}
+
+/* =========================
+   SIDEBAR
+   ========================= */
+
+.sidebar {
+    position: fixed;
+
+    top: 0;
+    left: -190px;
+
+    width: 190px;
+    height: 100vh;
+
+    padding: 60px 25px 25px;
+
+    background: #ffffff;
+
+    box-shadow:
+        2px 0 10px rgba(0, 0, 0, 0.15);
+
+    overflow-y: auto;
+
+    z-index: 200;
+
+    transition:
+        left 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+
+/* Sidebar open */
+
+.sidebar.active {
+    left: 0;
+}
+
+
+/* =========================
+   SIDEBAR LINKS
+   ========================= */
+
+.sidebar a {
+    display: block;
+
+    padding: 15px 20px;
+
+    color: #000;
+
+    text-decoration: none;
+
+    font-size: 16px;
+
+    transition:
+        all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+.sidebar a:hover {
+    background: #f2f2f2;
+
+    padding-left: 30px;
+
+    color: #3498db;
+}
+
+
+/* =========================
+   GREY OVERLAY
+   ========================= */
+
+#grey {
+    position: fixed;
+
+    top: 0;
+    left: 0;
+
+    width: 100vw;
+    height: 100vh;
+
+    background-color: rgba(0, 0, 0, 0);
+
+    z-index: 199;
+
+    opacity: 0;
+
+    visibility: hidden;
+
+    transition:
+        opacity 0.3s ease,
+        background-color 0.3s ease;
+}
+
+
+/* Overlay visible */
+
+#grey.active {
+    background-color: rgba(0, 0, 0, 0.5);
+
+    opacity: 1;
+
+    visibility: visible;
+}
+
+
+/* =========================
+   BANNER
+   ========================= */
+
+.banner-container {
+    position: relative;
+
+    left: 0;
+
+    display: flex;
+
+    justify-content: center;
+    align-items: center;
+
+    color: white;
+
+    margin: 0;
+    padding: 0;
+}
+
+
+.banner-container img {
+    display: block;
+
+    width: 100%;
+    height: auto;
+
+    margin: 0;
+    padding: 0;
+
+    filter: brightness(50%);
+}
+
+
+/* =========================
+   BANNER TEXT
+   ========================= */
+
+.banner-container .text-wrapper {
+    position: absolute;
+
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
+}
+
+
+.banner-container .text-wrapper .text {
+    font-size: 60px;
+
+    font-family: "Roboto", sans-serif;
+
+    font-weight: 500;
+}
+
+
+.banner-container .text-wrapper .box {
+    width: 130px;
+    height: 10px;
+
+    background-color: #00ffff;
+}
+
+
+/* =========================
+   CONTENT
+   ========================= */
+
+
+/*
+.content.active {
+    left: 258px;
+}
+*/
+
+
+
+.p1,
+.p2,
+.impact,
+.aim {
+    width: 100%;
+    min-width: 0;
+}
+
+.p1 .heading,
+.p2 .heading,
+.impact .heading,
+.aim .heading {
+    text-align: center;
+}
+
+.p1 .text,
+.p2 .text,
+.impact .text,
+.aim .text {
+    width: 100%;
+    font-weight: 350;
+    line-height: 1.6;
+}
+
+main hr {
+    grid-column: 1 / -1;
+    width: 40%;
+}

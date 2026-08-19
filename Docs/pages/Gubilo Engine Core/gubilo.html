@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Gubilo Engine Bare</title>
+
+    <link rel="stylesheet" href="./styles.css">
+
+    <link
+        rel="icon"
+        type="image/png"
+        href="../../assets/Logo.png"
+    >
+</head>
+
+<body>
+
+    <!-- ======================================================
+         MAIN ENGINE UI
+         ====================================================== -->
+
+    <button id="btn">
+        Text Editor
+    </button>
+
+    <span id="fps">
+        FPS: 0
+    </span>
+
+
+    <!-- ======================================================
+         CANVASES
+         ====================================================== -->
+
+    <canvas id="twod"></canvas>
+
+    <canvas id="threed"></canvas>
+
+
+    <!-- ======================================================
+         CODE EDITOR
+         ====================================================== -->
+
+    <div id="editor">
+
+        <div id="editorHeader">
+
+            <div id="editorTitle">
+                GUBILO CODE EDITOR
+            </div>
+
+            <button id="closeEditor">
+                ×
+            </button>
+
+        </div>
+
+
+        <!-- ==================================================
+             TABS
+             ================================================== -->
+
+        <div id="editorTabs">
+
+            <button
+                id="tab2d"
+                class="editorTab active"
+            >
+                2D
+            </button>
+
+            <button
+                id="tab3d"
+                class="editorTab"
+            >
+                3D
+            </button>
+
+        </div>
+
+
+        <!-- ==================================================
+             EDITOR BODY
+             ================================================== -->
+
+        <div id="editorBody">
+
+            <textarea
+                id="codeEditor"
+                spellcheck="false"
+            ></textarea>
+
+        </div>
+
+
+        <!-- ==================================================
+             CONTROLS
+             ================================================== -->
+
+        <div id="editorControls">
+
+            <button id="runCode">
+                ▶ Run
+            </button>
+
+            <button id="resetCode">
+                Reset
+            </button>
+
+            <span id="editorStatus">
+                Ready
+            </span>
+
+        </div>
+
+    </div>
+
+
+    <!-- ======================================================
+         GUBILO
+         ====================================================== -->
+
+    <script src="./src/gubilo.js"></script>
+
+    <!-- ======================================================
+         MAIN
+         ====================================================== -->
+
+    <script
+        src="./src/main.js"
+        type="module"
+    ></script>
+
+</body>
+</html>

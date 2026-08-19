@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculator</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="icon" type="image/x-icon" href=".../favicon.ico">
+    <link rel="icon" type="image/png" href=".../assets/Logo.png">
+    <link rel="shortcut icon" href="../../assets/Logo.png" type="image/png">
+</head>
+<body>
+    <div class="calculator">
+        <div class="display">
+            <input id="displayText" readonly>
+        </div>
+        <div class="buttons">
+            <button class="btn" id="backspace" onclick="backspace()">⌫</button>
+            <button class="btn" id="clear" onclick="clearAll()">AC</button>
+            <button class="btn" id="percentage" onclick="percent()">%</button>
+            <button class="btn" id="division" onclick="append('/')">÷</button>
+            <button class="btn" id="seven" onclick="append(7)">7</button>
+            <button class="btn" id="eight" onclick="append(8)">8</button>
+            <button class="btn" id="nine" onclick="append(9)">9</button>
+            <button class="btn" id="multiplication" onclick="append('*')">×</button>
+            <button class="btn" id="four" onclick="append(4)">4</button>
+            <button class="btn" id="five" onclick="append(5)">5</button>
+            <button class="btn" id="six" onclick="append(6)">6</button>
+            <button class="btn" id="subtraction" onclick="append('-')">-</button>
+            <button class="btn" id="one" onclick="append(1)">1</button>
+            <button class="btn" id="two" onclick="append(2)">2</button>
+            <button class="btn" id="three" onclick="append(3)">3</button>
+            <button class="btn" id="addition" onclick="append('+')">+</button>
+            <button class="btn" id="plusminue" onclick="plusMinus()">+/-</button>
+            <button class="btn" id="zero" onclick="append(0)">0</button>
+            <button class="btn" id="dot" onclick="append('.')">.</button>
+            <button class="btn" id="equals" onclick="calculate()">=</button>
+        </div>
+    </div>
+
+    <script src="src/main.js"></script>
+</body>
+</html>
