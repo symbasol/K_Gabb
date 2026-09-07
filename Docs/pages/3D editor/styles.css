@@ -1,0 +1,92 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    background: #1e1e1e;
+    color: #eee;
+}
+
+#layout {
+    display: flex;
+    height: 100vh;
+    width: 100vw;
+}
+
+#sidePanel {
+    width: 260px;
+    background: #252526;
+    padding: 12px 14px;
+    border-right: 1px solid #333;
+    overflow-y: auto;
+}
+
+#sidePanel h2 {
+    margin-top: 0;
+    font-size: 20px;
+    margin-bottom: 10px;
+}
+
+#sidePanel section {
+    margin-bottom: 14px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #333;
+}
+
+#sidePanel h3 {
+    margin: 6px 0;
+    font-size: 14px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: #bbb;
+}
+
+#sidePanel button {
+    display: block;
+    width: 100%;
+    margin: 3px 0;
+    padding: 6px 8px;
+    background: #3a3a3a;
+    border: 1px solid #555;
+    color: #eee;
+    border-radius: 3px;
+    cursor: pointer;
+    font-size: 13px;
+    text-align: left;
+}
+
+#sidePanel button:hover {
+    background: #444;
+}
+
+#sidePanel input[type="file"] {
+    width: 100%;
+    margin: 4px 0;
+    font-size: 12px;
+}
+
+#sidePanel input[type="range"] {
+    width: 100%;
+}
+
+#sidePanel input[type="color"] {
+    width: 100%;
+    height: 28px;
+    padding: 0;
+    border: 1px solid #555;
+    background: #1e1e1e;
+}
+
+#viewport {
+    flex: 1;
+    position: relative;
+}
+
+#editorCanvas {
+    width: 100%;
+    height: 100%;
+    display: block;
+    background: #202020;
+}

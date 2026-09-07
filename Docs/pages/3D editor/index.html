@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Web 3D Editor</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div id="layout">
+        <div id="sidePanel">
+            <h2>3D Editor</h2>
+
+            <section>
+                <h3>Modes</h3>
+                <button id="selectBtn">Select</button>
+                <button id="moveBtn">Move</button>
+                <button id="rotateBtn">Rotate</button>
+                <button id="scaleBtn">Scale</button>
+            </section>
+
+            <section>
+                <h3>Edit Mode</h3>
+                <button id="vertexModeBtn">Vertex</button>
+                <button id="edgeModeBtn">Edge</button>
+                <button id="faceModeBtn">Face</button>
+                <button id="extrudeFaceBtn">Extrude Face</button>
+            </section>
+
+            <section>
+                <h3>Create</h3>
+                <button id="addTriangleBtn">Add Triangle</button>
+                <button id="addQuadBtn">Add Quad</button>
+            </section>
+
+            <section>
+                <h3>Subdivision</h3>
+                <label>
+                    Level:
+                    <input type="range" id="subdivSlider" min="0" max="3" value="0">
+                </label>
+            </section>
+
+            <section>
+                <h3>Texture</h3>
+                <input type="file" id="textureInput" accept="image/*">
+                <button id="applyTextureBtn">Apply Texture</button>
+            </section>
+
+            <section>
+                <h3>Color</h3>
+                <input type="color" id="colorPicker" value="#ff0000">
+                <button id="applyColorBtn">Apply Color</button>
+            </section>
+
+            <section>
+                <h3>Import / Export</h3>
+                <input type="file" id="importFile" accept=".obj,.gltf,.glb">
+                <button id="importBtn">Import</button>
+                <button id="exportGLBBtn">Export GLB</button>
+                <button id="exportGLTFBtn">Export GLTF</button>
+                <button id="exportOBJBtn">Export OBJ</button>
+
+                <button id="saveBtn">Save</button>
+                <button id="loadBtn">Load</button>
+                <input type="file" id="loadFile" accept=".json" style="display:none">
+            </section>
+
+
+            <section>
+                <h3>Status</h3>
+                <p>Selected: <span id="selectedName">None</span></p>
+                <p>Mode: <span id="modeText">select</span></p>
+            </section>
+        </div>
+
+        <div id="viewport">
+            <canvas id="editorCanvas"></canvas>
+        </div>
+    </div>
+
+    <script src="https://cdn.babylonjs.com/babylon.js"></script>
+    <script src="https://cdn.babylonjs.com/loaders/babylonjs.loaders.min.js"></script>
+    <script src="https://cdn.babylonjs.com/materialsLibrary/babylonjs.materials.min.js"></script>
+    <script src="https://cdn.babylonjs.com/serializers/babylonjs.serializers.min.js"></script>
+    <script type="module" src="main.js"></script>
+</body>
+</html>

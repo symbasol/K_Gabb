@@ -1,18 +1,42 @@
-.roboto {
-    font-family: "Roboto", sans-serif;
-    font-optical-sizing: auto;
-    font-weight: 500;
-    font-style: normal;
-    font-variation-settings:
-        "width" 100;
+/* =========================================================
+   ROOT VARIABLES
+   ========================================================= */
+
+:root {
+    --blue: #3498db;
+    --cyan: #00ffff;
+
+    --white: #ffffff;
+    --black: #000000;
+
+    --text: #222222;
+    --text-light: #666666;
+
+    --header-bg: rgba(255, 255, 255, 0.96);
+    --overlay: rgba(0, 0, 0, 0.5);
+
+    --content-width: 1200px;
+    --header-height: 58px;
 }
 
 
-/* =========================
-   GENERAL
-   ========================= */
+/* =========================================================
+   RESET / GENERAL
+   ========================================================= */
 
-html,
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+html {
+    margin: 0;
+    padding: 0;
+
+    scroll-behavior: smooth;
+}
+
 body {
     margin: 0;
     padding: 0;
@@ -20,37 +44,494 @@ body {
     overflow-x: hidden;
 
     font-family: "Roboto", sans-serif;
+    font-weight: 400;
+
+    color: var(--text);
+    background: var(--white);
 }
 
-* {
-    box-sizing: border-box;
+img {
+    display: block;
+    max-width: 100%;
 }
+
+.roboto {
+    font-family: "Roboto", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 500;
+    font-style: normal;
+    font-variation-settings: "width" 100;
+}
+
+
+/* =========================================================
+   HEADER
+   ========================================================= */
+
+.page-header {
+    margin: 0;
+    padding: 0;
+}
+
+
+/* Header background */
+
+.page-header-div {
+    position: fixed;
+
+    top: 0;
+    left: 0;
+
+    width: 100%;
+    height: var(--header-height);
+
+    background-color: transparent;
+
+    z-index: 1000;
+
+    transition:
+        background-color 0.3s ease,
+        box-shadow 0.3s ease;
+}
+
+
+/* Header after scrolling */
+
+body.scrolled .page-header-div {
+    background-color: var(--header-bg);
+
+    box-shadow:
+        0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+
+/* =========================================================
+   TITLE
+   ========================================================= */
+
+.title {
+    position: fixed;
+
+    top: 0;
+    left: 120px;
+
+    height: var(--header-height);
+
+    margin: 0;
+    padding: 0;
+
+    display: flex;
+    align-items: center;
+
+    z-index: 1050;
+
+    font-size: 25px;
+    font-weight: 700;
+
+    line-height: 1;
+
+    white-space: nowrap;
+}
+
+.title a {
+    color: var(--white);
+
+    text-decoration: none;
+
+    transition: color 0.3s ease;
+}
+
+.title a:visited {
+    color: var(--white);
+}
+
+.title a:hover {
+    color: var(--cyan);
+
+    text-decoration: none;
+}
+
+body.scrolled .title a {
+    color: var(--blue);
+}
+
+
+/* =========================================================
+   LOGO
+   ========================================================= */
+
+.logo {
+    position: fixed;
+
+    top: 5px;
+    left: 60px;
+
+    width: 50px;
+    height: 50px;
+
+    object-fit: contain;
+
+    /* Your requested logo z-index */
+    z-index: 1060;
+}
+
+
+/* =========================================================
+   HAMBURGER BUTTON
+   ========================================================= */
+
+.menu-btn {
+    position: fixed;
+
+    top: 20px;
+    left: 20px;
+
+    width: 25px;
+    height: 18px;
+
+    margin: 0;
+    padding: 0;
+
+    background: none;
+    border: none;
+
+    cursor: pointer;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+
+    z-index: 1200;
+
+    transition: transform 0.2s ease;
+}
+
+
+/* Hamburger bars */
+
+.menu-btn span {
+    display: block;
+
+    width: 25px;
+    height: 3px;
+
+    background: var(--white);
+
+    border-radius: 5px;
+
+    transition:
+        transform 0.3s ease,
+        opacity 0.3s ease,
+        background-color 0.3s ease;
+}
+
+
+/* Black when scrolling */
+
+body.scrolled .menu-btn span {
+    background: var(--black);
+}
+
+
+/* Hover */
+
+.menu-btn:hover {
+    transform: scale(1.05);
+}
+
+.menu-btn:hover span {
+    background: var(--blue) !important;
+}
+
+
+/* =========================================================
+   HAMBURGER → X
+   ========================================================= */
+
+.menu-btn.active span:nth-child(1) {
+    transform: translateY(7.5px) rotate(45deg);
+}
+
+.menu-btn.active span:nth-child(2) {
+    opacity: 0;
+}
+
+.menu-btn.active span:nth-child(3) {
+    transform: translateY(-7.5px) rotate(-45deg);
+}
+
+.menu-btn.active span {
+    background: var(--black);
+}
+
+
+/* =========================================================
+   SIDEBAR
+   ========================================================= */
+
+.sidebar {
+    position: fixed;
+
+    top: 0;
+    left: -250px;
+
+    width: 225px;
+    height: 100vh;
+
+    padding: 70px 15px 25px;
+
+    background: var(--white);
+
+    box-shadow:
+        2px 0 12px rgba(0, 0, 0, 0.15);
+
+    overflow-y: auto;
+
+    z-index: 1150;
+
+    transition:
+        left 0.3s ease;
+}
+
+
+/* Sidebar open */
+
+.sidebar.active {
+    left: 0;
+}
+
+
+/* =========================================================
+   SIDEBAR LINKS
+   ========================================================= */
+
+.sidebar a {
+    display: block;
+
+    width: 100%;
+
+    padding: 14px 18px;
+
+    margin-bottom: 3px;
+
+    border-radius: 7px;
+
+    color: var(--black);
+
+    text-decoration: none;
+
+    font-size: 16px;
+    font-weight: 500;
+
+    transition:
+        background-color 0.25s ease,
+        color 0.25s ease,
+        padding-left 0.25s ease;
+}
+
+.sidebar a:hover {
+    background-color: #f2f2f2;
+
+    padding-left: 26px;
+
+    color: var(--blue);
+}
+
+
+/* =========================================================
+   GREY OVERLAY
+   ========================================================= */
+
+#grey {
+    position: fixed;
+
+    top: 0;
+    left: 0;
+
+    width: 100%;
+    height: 100vh;
+
+    background-color: transparent;
+
+    z-index: 1100;
+
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+
+    transition:
+        opacity 0.3s ease,
+        visibility 0.3s ease;
+}
+
+
+/* Overlay visible */
+
+#grey.active {
+    background-color: var(--overlay);
+
+    opacity: 1;
+    visibility: visible;
+
+    pointer-events: auto;
+}
+
+
+/* =========================================================
+   BANNER
+   ========================================================= */
+
+.banner-container {
+    position: relative;
+
+    width: 100%;
+
+    margin: 0;
+    padding: 0;
+
+    display: flex;
+
+    justify-content: center;
+    align-items: center;
+
+    overflow: hidden;
+
+    color: var(--white);
+}
+
+.banner-container img {
+    display: block;
+
+    width: 100%;
+    height: auto;
+
+    min-height: 280px;
+
+    object-fit: cover;
+
+    filter: brightness(50%);
+}
+
+
+/* =========================================================
+   BANNER TEXT
+   ========================================================= */
+
+.banner-container .text-wrapper {
+    position: absolute;
+
+    top: 50%;
+    left: 50%;
+
+    transform: translate(-50%, -50%);
+
+    width: 90%;
+
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
+    justify-content: center;
+
+    text-align: center;
+}
+
+.banner-container .text-wrapper .text {
+    margin: 0 0 15px;
+
+    color: var(--white);
+
+    font-family: "Roboto", sans-serif;
+
+    font-size: clamp(36px, 6vw, 60px);
+
+    font-weight: 500;
+
+    line-height: 1.1;
+
+    text-shadow:
+        0 3px 10px rgba(0, 0, 0, 0.5);
+}
+
+.banner-container .text-wrapper .box {
+    width: 130px;
+    height: 10px;
+
+    background-color: var(--cyan);
+
+    border-radius: 5px;
+}
+
+
+/* =========================================================
+   CONTENT
+   ========================================================= */
 
 .content {
-    position: absolute;
-    top: 360px;
-    left: 16px;
+    width: 100%;
+    max-width: var(--content-width);
 
-    width: calc(100% - 32px);
-    padding: 44px;
+    margin: 0 auto;
+
+    padding: 55px 40px 30px;
 }
+
+
+/* =========================================================
+   MAIN GRID
+   ========================================================= */
 
 main {
     width: 100%;
 
     display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
+
+    grid-template-columns:
+        repeat(3, minmax(0, 1fr));
+
     column-gap: 40px;
-    row-gap: 40px;
+    row-gap: 45px;
 }
 
-/* Introduction */
+
+/* =========================================================
+   INTRODUCTION
+   ========================================================= */
+
 .intro {
     grid-column: 1 / -1;
+
+    width: 100%;
+
+    margin: 0;
+
+    font-size: 18px;
+
+    font-weight: 400;
+
+    line-height: 1.8;
+
+    color: var(--text-light);
+
     text-align: left;
 }
 
-/* HTML, CSS, JS */
+
+/* =========================================================
+   HTML / CSS / JS
+   ========================================================= */
+
+.HTML,
+.CSS,
+.JS {
+    width: 100%;
+    min-width: 0;
+}
+
+
+/* Explicit columns */
+
 .HTML {
     grid-column: 1;
 }
@@ -63,409 +544,691 @@ main {
     grid-column: 3;
 }
 
-/* Divider after HTML/CSS/JS */
+
+/* =========================================================
+   HEADINGS
+   ========================================================= */
+
+.HTML .heading,
+.CSS .heading,
+.JS .heading,
+.projects .heading {
+    margin: 0 0 18px;
+
+    color: var(--text);
+
+    font-size: 28px;
+
+    font-weight: 700;
+
+    line-height: 1.25;
+
+    text-align: center;
+}
+
+
+/* =========================================================
+   DESCRIPTION TEXT
+   ========================================================= */
+
+.HTML .text,
+.CSS .text,
+.JS .text {
+    width: 100%;
+
+    margin: 0;
+
+    color: var(--text-light);
+
+    font-size: 17px;
+
+    font-weight: 400;
+
+    line-height: 1.75;
+
+    text-align: center;
+}
+
+
+/* =========================================================
+   MAIN DIVIDER
+   ========================================================= */
+
 main > hr {
     grid-column: 1 / -1;
+
     width: 100%;
-    border: 0;
-    border-top: 1px solid #000;
+
+    height: 0;
+
     margin: 0;
+
+    border: 0;
+
+    border-top: 2px solid #cccccc;
 }
 
-/* Projects */
+
+/* =========================================================
+   PROJECTS
+   ========================================================= */
+
 .projects {
     grid-column: 1 / -1;
-}
-
-
-
-/* =========================
-   HEADER
-   ========================= */
-
-.page-header {
-    margin: 0;
-    padding: 0;
-}
-
-
-/* Background of header */
-
-.page-header-div {
-    position: fixed;
-
-    top: 0;
-    left: 0;
-
-    width: 100vw;
-    height: 58px;
-
-    margin: 0;
-    padding: 0;
-
-    background-color: transparent;
-
-    z-index: 149;
-
-    transition:
-        background-color 0.3s ease,
-        box-shadow 0.3s ease;
-}
-
-
-/* Header when scrolling */
-
-body.scrolled .page-header-div {
-    background-color: rgba(255, 255, 255, 0.95);
-
-    box-shadow:
-        0 2px 10px rgba(0, 0, 0, 0.1);
-}
-
-
-/* =========================
-   TITLE
-   ========================= */
-
-/* =========================
-   TITLE
-   ========================= */
-
-.title {
-    display: flex;
-
-    align-items: center;
-
-    position: fixed;
-
-    top: 15px;
-    left: 120px;
 
     width: 100%;
-
-    margin: 0;
-
-    background: transparent;
-
-    font-size: 25px;
-
-    z-index: 150;
-
-    transition: color 0.3s ease;
 }
 
-/* Make the title link look like normal text */
-.title a {
-    color: #fff;
-    text-decoration: none;
-}
-
-.title a:visited {
-    color: #fff;
-}
-
-.title a:hover {
-    color: #fff;
-    text-decoration: none;
-}
-
-/* Title becomes blue when scrolling */
-body.scrolled .title a {
-    color: #3498db;
-}
-
-/* =========================
-   LOGO
-   ========================= */
-
-.logo {
-    display: flex;
-
-    gap: 10px;
-
-    position: fixed;
-
-    top: 5px;
-    left: 60px;
-
-    z-index: 151;
-
-    width: 50px;
-    height: 50px;
+.projects .heading {
+    margin-bottom: 30px;
 }
 
 
-/* =========================
-   HAMBURGER BUTTON
-   ========================= */
+/* Project category text */
 
-.menu-btn {
-    position: fixed;
+.projects > .text {
+    margin: 25px 0 10px;
 
-    top: 20px;
-    left: 20px;
+    font-size: 18px;
 
-    width: 20px;
-    height: 20px;
+    font-weight: 600;
 
-    margin-right: 20px;
-    padding: 0;
+    color: var(--text);
 
-    background: none;
-    border: none;
-
-    cursor: pointer;
-
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-
-    z-index: 1000;
-
-    transition:
-        transform 0.2s ease;
+    text-align: left;
 }
 
 
-/* Hamburger bars */
+/* =========================================================
+   PROJECT LIST
+   ========================================================= */
 
-.menu-btn span {
-    display: block;
+.projects-list {
+    margin: 0 0 25px;
 
-    width: 25px;
-    height: 3px;
+    padding-left: 25px;
 
-    background: white;
+    font-size: 17px;
 
-    border-radius: 5px;
+    font-weight: 400;
 
-    transition:
-        transform 0.3s cubic-bezier(0.25, 0.8, 0.25, 1),
-        opacity 0.3s ease,
-        background-color 0.3s ease;
+    line-height: 1.8;
+
+    color: var(--text-light);
+}
+
+.projects-list li {
+    margin-bottom: 5px;
 }
 
 
-/* Hamburger becomes black when scrolling */
+/* Project links */
 
-body.scrolled .menu-btn span {
-    background: #000;
-}
-
-
-/* =========================
-   HAMBURGER HOVER
-   ========================= */
-
-.menu-btn:hover {
-    transform: scale(1.05);
-}
-
-.menu-btn:hover span {
-    background: #3498db !important;
-}
-
-
-/* =========================
-   HAMBURGER → X
-   ========================= */
-
-.menu-btn.active span:nth-child(1) {
-    transform: translateY(8.5px) rotate(45deg);
-    color: black;
-}
-
-.menu-btn.active span:nth-child(2) {
-    opacity: 0;
-}
-
-.menu-btn.active span:nth-child(3) {
-    transform: translateY(-8.5px) rotate(-45deg);
-    color: black;
-}
-
-/* Hamburger becomes black when sidebar is open */
-.menu-btn.active span {
-    background: #000;
-}
-
-/* =========================
-   SIDEBAR
-   ========================= */
-
-.sidebar {
-    position: fixed;
-
-    top: 0;
-    left: -225px;
-
-    width: 175px;
-    height: 100vh;
-
-    padding: 60px 25px 25px;
-
-    background: #ffffff;
-
-    box-shadow:
-        2px 0 10px rgba(0, 0, 0, 0.15);
-
-    overflow-y: auto;
-
-    z-index: 200;
-
-    transition:
-        left 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
-}
-
-
-/* Sidebar open */
-
-.sidebar.active {
-    left: 0;
-}
-
-
-/* =========================
-   SIDEBAR LINKS
-   ========================= */
-
-.sidebar a {
-    display: block;
-
-    padding: 15px 20px;
-
-    color: #000;
+.projects-list a {
+    color: var(--blue);
 
     text-decoration: none;
 
-    font-size: 16px;
-
     transition:
-        all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+        color 0.2s ease;
 }
 
-.sidebar a:hover {
-    background: #f2f2f2;
+.projects-list a:hover {
+    color: var(--blue-dark);
 
-    padding-left: 30px;
-
-    color: #3498db;
-}
-
-
-/* =========================
-   GREY OVERLAY
-   ========================= */
-
-#grey {
-    position: fixed;
-
-    top: 0;
-    left: 0;
-
-    width: 100vw;
-    height: 100vh;
-
-    background-color: rgba(0, 0, 0, 0);
-
-    z-index: 199;
-
-    opacity: 0;
-
-    visibility: hidden;
-
-    transition:
-        opacity 0.3s ease,
-        background-color 0.3s ease;
+    text-decoration: underline;
 }
 
 
-/* Overlay visible */
+/* =========================================================
+   FOOTER
+   ========================================================= */
 
-#grey.active {
-    background-color: rgba(0, 0, 0, 0.5);
-
-    opacity: 1;
-
-    visibility: visible;
-}
-
-
-/* =========================
-   BANNER
-   ========================= */
-
-.banner-container {
-    position: relative;
-
-    left: 0;
-
-    display: flex;
-
-    justify-content: center;
-    align-items: center;
-
-    color: white;
-
-    margin: 0;
-    padding: 0;
-}
-
-
-.banner-container img {
-    display: block;
-
+footer {
     width: 100%;
-    height: auto;
 
+    margin-top: 70px;
+
+    text-align: center;
+}
+
+footer hr {
+    width: 100%;
+
+    margin: 0 0 20px;
+
+    border: 0;
+
+    border-top: 1px solid #dddddd;
+}
+
+footer p {
     margin: 0;
-    padding: 0;
 
-    filter: brightness(50%);
+    color: #777777;
+
+    font-size: 14px;
+
+    line-height: 1.5;
 }
 
 
-/* =========================
-   BANNER TEXT
-   ========================= */
+/* =========================================================
+   TABLET
+   ========================================================= */
 
-.banner-container .text-wrapper {
-    position: absolute;
+@media (max-width: 900px) {
 
-    display: flex;
+    .content {
+        padding-left: 30px;
+        padding-right: 30px;
+    }
 
-    flex-direction: column;
 
-    align-items: center;
+    /* Keep 3 columns, but make them tighter */
+
+    main {
+        column-gap: 25px;
+        row-gap: 40px;
+    }
+
+
+    .HTML .heading,
+    .CSS .heading,
+    .JS .heading {
+        font-size: 24px;
+    }
+
+
+    .HTML .text,
+    .CSS .text,
+    .JS .text {
+        font-size: 16px;
+    }
+
+
+    .intro {
+        font-size: 17px;
+    }
+
+
+    /* Header */
+
+    .title {
+        left: 105px;
+
+        font-size: 22px;
+    }
+
+    .logo {
+        left: 55px;
+
+        width: 45px;
+        height: 45px;
+
+        z-index: 1060;
+    }
 }
 
 
-.banner-container .text-wrapper .text {
-    font-size: 60px;
+/* =========================================================
+   MOBILE
+   ========================================================= */
 
-    font-family: "Roboto", sans-serif;
+@media (max-width: 600px) {
 
-    font-weight: 500;
+    :root {
+        --header-height: 55px;
+    }
 
-    color: white;
+
+    /* -------------------------
+       HEADER
+       ------------------------- */
+
+    .page-header-div {
+        height: 55px;
+    }
+
+
+    /* -------------------------
+       HAMBURGER
+       ------------------------- */
+
+    .menu-btn {
+        top: 18px;
+        left: 15px;
+
+        width: 23px;
+        height: 17px;
+    }
+
+    .menu-btn span {
+        width: 23px;
+        height: 3px;
+    }
+
+    .menu-btn.active span:nth-child(1) {
+        transform: translateY(7px) rotate(45deg);
+    }
+
+    .menu-btn.active span:nth-child(3) {
+        transform: translateY(-7px) rotate(-45deg);
+    }
+
+
+    /* -------------------------
+       LOGO
+       ------------------------- */
+
+    .logo {
+        top: 7px;
+        left: 50px;
+
+        width: 40px;
+        height: 40px;
+
+        z-index: 1060;
+    }
+
+
+    /* -------------------------
+       TITLE
+       ------------------------- */
+
+    .title {
+        left: 98px;
+
+        height: 55px;
+
+        font-size: 18px;
+    }
+
+
+    /* -------------------------
+       SIDEBAR
+       ------------------------- */
+
+    .sidebar {
+        width: 240px;
+
+        left: -260px;
+
+        padding-top: 70px;
+    }
+
+
+    /* -------------------------
+       BANNER
+       ------------------------- */
+
+    .banner-container img {
+        width: 100%;
+
+        height: 45vw;
+
+        min-height: 230px;
+
+        object-fit: cover;
+    }
+
+    .banner-container .text-wrapper .text {
+        font-size: clamp(32px, 9vw, 48px);
+
+        margin-bottom: 12px;
+    }
+
+    .banner-container .text-wrapper .box {
+        width: 90px;
+        height: 7px;
+    }
+
+
+    /* -------------------------
+       CONTENT
+       ------------------------- */
+
+    .content {
+        width: 100%;
+
+        padding: 40px 20px 25px;
+    }
+
+
+    /* -------------------------
+       MAIN
+       ------------------------- */
+
+    main {
+        display: grid;
+
+        grid-template-columns: 1fr;
+
+        gap: 40px;
+    }
+
+
+    /* -------------------------
+       INTRO
+       ------------------------- */
+
+    .intro {
+        grid-column: 1;
+
+        font-size: 16px;
+
+        line-height: 1.75;
+
+        text-align: left;
+    }
+
+
+    /* -------------------------
+       HTML / CSS / JS
+       ------------------------- */
+
+    .HTML,
+    .CSS,
+    .JS {
+        grid-column: 1;
+
+        width: 100%;
+    }
+
+
+    .HTML .heading,
+    .CSS .heading,
+    .JS .heading {
+        margin-bottom: 15px;
+
+        font-size: 25px;
+    }
+
+
+    .HTML .text,
+    .CSS .text,
+    .JS .text {
+        font-size: 16px;
+
+        line-height: 1.75;
+
+        text-align: left;
+    }
+
+
+    /* -------------------------
+       DIVIDER
+       ------------------------- */
+
+    main > hr {
+        grid-column: 1;
+
+        margin: 0;
+    }
+
+
+    /* -------------------------
+       PROJECTS
+       ------------------------- */
+
+    .projects {
+        grid-column: 1;
+    }
+
+    .projects .heading {
+        font-size: 26px;
+
+        line-height: 1.3;
+
+        margin-bottom: 25px;
+    }
+
+
+    .projects > .text {
+        margin-top: 20px;
+
+        font-size: 17px;
+    }
+
+
+    .projects-list {
+        padding-left: 24px;
+
+        font-size: 16px;
+
+        line-height: 1.75;
+    }
+
+
+    /* -------------------------
+       FOOTER
+       ------------------------- */
+
+    footer {
+        margin-top: 50px;
+    }
+
+    footer p {
+        font-size: 13px;
+    }
 }
 
 
-.banner-container .text-wrapper .box {
-    width: 130px;
-    height: 10px;
+/* =========================================================
+   SMALL MOBILE
+   ========================================================= */
 
-    background-color: #00ffff;
+@media (max-width: 400px) {
+
+    /* Hamburger */
+
+    .menu-btn {
+        top: 18px;
+        left: 12px;
+
+        width: 22px;
+        height: 16px;
+    }
+
+    .menu-btn span {
+        width: 22px;
+        height: 3px;
+    }
+
+    .menu-btn.active span:nth-child(1) {
+        transform: translateY(6.5px) rotate(45deg);
+    }
+
+    .menu-btn.active span:nth-child(3) {
+        transform: translateY(-6.5px) rotate(-45deg);
+    }
+
+
+    /* Logo */
+
+    .logo {
+        top: 9px;
+        left: 42px;
+
+        width: 35px;
+        height: 35px;
+
+        z-index: 1060;
+    }
+
+
+    /* Title */
+
+    .title {
+        left: 85px;
+
+        font-size: 16px;
+    }
+
+
+    /* Banner */
+
+    .banner-container img {
+        min-height: 210px;
+    }
+
+    .banner-container .text-wrapper .text {
+        font-size: 30px;
+    }
+
+    .banner-container .text-wrapper .box {
+        width: 75px;
+        height: 6px;
+    }
+
+
+    /* Content */
+
+    .content {
+        padding: 30px 15px 20px;
+    }
+
+
+    /* Intro */
+
+    .intro {
+        font-size: 15px;
+
+        line-height: 1.7;
+    }
+
+
+    /* Headings */
+
+    .HTML .heading,
+    .CSS .heading,
+    .JS .heading {
+        font-size: 23px;
+    }
+
+
+    .projects .heading {
+        font-size: 24px;
+    }
+
+
+    /* Text */
+
+    .HTML .text,
+    .CSS .text,
+    .JS .text {
+        font-size: 15px;
+
+        line-height: 1.7;
+    }
+
+
+    .projects > .text {
+        font-size: 16px;
+    }
+
+
+    .projects-list {
+        font-size: 15px;
+
+        line-height: 1.7;
+    }
 }
 
 
-/* =========================
-   CONTENT
-   ========================= */
+/* =========================================================
+   VERY SMALL PHONES
+   ========================================================= */
 
+@media (max-width: 340px) {
 
-/*
-.content.active {
-    left: 258px;
+    .title {
+        left: 80px;
+
+        font-size: 15px;
+    }
+
+    .logo {
+        left: 39px;
+
+        width: 34px;
+        height: 34px;
+
+        z-index: 1060;
+    }
+
+    .content {
+        padding-left: 12px;
+        padding-right: 12px;
+    }
+
+    .intro {
+        font-size: 14px;
+    }
+
+    .HTML .heading,
+    .CSS .heading,
+    .JS .heading {
+        font-size: 21px;
+    }
+
+    .HTML .text,
+    .CSS .text,
+    .JS .text {
+        font-size: 14px;
+    }
+
+    .projects .heading {
+        font-size: 22px;
+    }
+
+    .projects-list {
+        font-size: 14px;
+    }
 }
-*/
+
+
+/* =========================================================
+   TOUCH DEVICES
+   ========================================================= */
+
+@media (hover: none) {
+
+    .menu-btn:hover {
+        transform: none;
+    }
+
+    .sidebar a:hover {
+        padding-left: 18px;
+
+        background-color: transparent;
+
+        color: var(--black);
+    }
+
+    .projects-list a:hover {
+        color: var(--blue);
+
+        text-decoration: none;
+    }
+}
+
+
+/* =========================================================
+   REDUCED MOTION
+   ========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+
+    html {
+        scroll-behavior: auto;
+    }
+
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+}

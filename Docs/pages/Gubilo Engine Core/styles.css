@@ -13,6 +13,9 @@ body {
     overflow: hidden;
 
     background: aliceblue;
+
+    /* Prevent accidental browser gestures */
+    touch-action: none;
 }
 
 
@@ -33,10 +36,15 @@ body {
 
 #twod,
 #threed {
+    display: block;
+
     width: 100%;
     height: 100%;
 
-    display: block;
+    min-width: 0;
+    min-height: 0;
+
+    touch-action: none;
 }
 
 
@@ -52,12 +60,15 @@ body {
 
     z-index: 1000;
 
+    margin: 0;
+
     font-family:
         "Courier New",
         Courier,
         monospace;
 
     font-size: 30px;
+    font-weight: bold;
 
     color: white;
 
@@ -98,17 +109,171 @@ body {
 
     cursor: pointer;
 
+    user-select: none;
+    -webkit-user-select: none;
+
+    touch-action: manipulation;
+
     transition:
-        background 0.15s,
-        transform 0.15s;
+        background 0.15s ease,
+        transform 0.15s ease;
 }
+
 
 #btn:hover {
     background: #333;
 }
 
+
 #btn:active {
     transform: scale(0.97);
+}
+
+
+/* ============================================================
+   MOBILE CONTROLS
+   ============================================================ */
+
+/*
+ * IMPORTANT:
+ *
+ * The D-pad and zoom controls are now two separate fixed
+ * areas.
+ *
+ * This prevents the zoom buttons from being affected by
+ * the D-pad's scaling or positioning.
+ */
+
+#mobileControls {
+    display: none;
+
+    position: fixed;
+
+    left: 12px;
+    bottom: 12px;
+
+    z-index: 1500;
+
+    width: 145px;
+    height: 145px;
+
+    pointer-events: none;
+}
+
+
+/* ============================================================
+   D-PAD
+   ============================================================ */
+
+#mobileControls button {
+    position: absolute;
+
+    width: 45px;
+    height: 45px;
+
+    padding: 0;
+
+    border: 1px solid rgba(255, 255, 255, 0.45);
+
+    border-radius: 8px;
+
+    background: rgba(0, 0, 0, 0.55);
+
+    color: white;
+
+    font-family:
+        Arial,
+        sans-serif;
+
+    font-size: 23px;
+    font-weight: bold;
+
+    cursor: pointer;
+
+    user-select: none;
+    -webkit-user-select: none;
+
+    pointer-events: auto;
+
+    touch-action: none;
+
+    -webkit-tap-highlight-color: transparent;
+
+    transition:
+        background 0.1s ease,
+        transform 0.1s ease;
+}
+
+
+#mobileControls button:active {
+    background: rgba(56, 189, 248, 0.75);
+
+    transform: scale(0.93);
+}
+
+
+/* ============================================================
+   D-PAD POSITIONS
+   ============================================================ */
+
+#touchUp {
+    left: 50px;
+    top: 0;
+}
+
+
+#touchLeft {
+    left: 0;
+    top: 50px;
+}
+
+
+#touchRight {
+    left: 100px;
+    top: 50px;
+}
+
+
+#touchDown {
+    left: 50px;
+    top: 100px;
+}
+
+
+/* ============================================================
+   ZOOM CONTROLS
+   ============================================================ */
+
+/*
+ * DO NOT put these inside the scaled D-pad.
+ *
+ * They are fixed directly to the viewport.
+ */
+
+#touchZoomIn,
+#touchZoomOut {
+    position: fixed;
+
+    z-index: 1501;
+
+    left: auto;
+
+    right: 12px;
+
+    width: 45px;
+    height: 45px;
+
+    margin: 0;
+}
+
+
+#touchZoomIn {
+    bottom: 65px;
+}
+
+
+#touchZoomOut {
+    bottom: 12px;
 }
 
 
@@ -131,7 +296,6 @@ body {
     flex-direction: column;
 
     background: #111;
-
     color: #eee;
 
     box-shadow:
@@ -141,20 +305,17 @@ body {
 
     transition:
         transform 0.3s ease;
-
-    font-family:
-        "Courier New",
-        Courier,
-        monospace;
 }
 
 
-/* ============================================================
-   OPEN STATE
-   ============================================================ */
-
 #editor.open {
-    transform: translateX(0);
+    transform: translateX(0) !important;
+
+    visibility: visible !important;
+
+    opacity: 1 !important;
+
+    z-index: 999999 !important;
 }
 
 
@@ -168,6 +329,7 @@ body {
     flex-shrink: 0;
 
     display: flex;
+
     align-items: center;
     justify-content: space-between;
 
@@ -188,25 +350,42 @@ body {
     font-weight: bold;
 
     color: #7dd3fc;
+
+    white-space: nowrap;
 }
 
+
+/* ============================================================
+   CLOSE EDITOR
+   ============================================================ */
 
 #closeEditor {
     width: 35px;
     height: 35px;
 
+    padding: 0;
+
     border: none;
+
+    border-radius: 5px;
 
     background: transparent;
 
     color: #aaa;
 
     font-size: 28px;
+    line-height: 35px;
 
     cursor: pointer;
 
-    border-radius: 5px;
+    user-select: none;
+    -webkit-user-select: none;
+
+    touch-action: manipulation;
+
+    -webkit-tap-highlight-color: transparent;
 }
+
 
 #closeEditor:hover {
     background: #333;
@@ -215,8 +394,15 @@ body {
 }
 
 
+#closeEditor:active {
+    background: #444;
+
+    transform: scale(0.95);
+}
+
+
 /* ============================================================
-   TABS
+   EDITOR TABS
    ============================================================ */
 
 #editorTabs {
@@ -236,6 +422,10 @@ body {
 .editorTab {
     width: 90px;
 
+    height: 45px;
+
+    padding: 0;
+
     border: none;
 
     border-right:
@@ -253,6 +443,17 @@ body {
     font-size: 15px;
 
     cursor: pointer;
+
+    user-select: none;
+    -webkit-user-select: none;
+
+    touch-action: manipulation;
+
+    -webkit-tap-highlight-color: transparent;
+
+    transition:
+        background 0.15s ease,
+        color 0.15s ease;
 }
 
 
@@ -260,6 +461,11 @@ body {
     background: #202020;
 
     color: white;
+}
+
+
+.editorTab:active {
+    background: #292929;
 }
 
 
@@ -283,6 +489,8 @@ body {
     min-height: 0;
 
     background: #0d0d0d;
+
+    overflow: hidden;
 }
 
 
@@ -291,6 +499,8 @@ body {
    ============================================================ */
 
 #codeEditor {
+    display: block;
+
     width: 100%;
     height: 100%;
 
@@ -322,6 +532,24 @@ body {
     white-space: pre;
 
     overflow: auto;
+
+    /*
+     * Allow the editor to scroll on touch screens.
+     */
+    touch-action: pan-x pan-y;
+
+    /*
+     * Prevent mobile Safari from automatically
+     * changing the editor's font size.
+     */
+    -webkit-text-size-adjust: 100%;
+
+    /*
+     * Remove iOS textarea styling.
+     */
+    -webkit-appearance: none;
+
+    border-radius: 0;
 }
 
 
@@ -351,8 +579,15 @@ body {
 }
 
 
+/* ============================================================
+   EDITOR CONTROL BUTTONS
+   ============================================================ */
+
 #editorControls button {
-    padding: 8px 16px;
+    min-height: 36px;
+
+    padding:
+        8px 16px;
 
     border-radius: 5px;
 
@@ -367,7 +602,20 @@ body {
         Courier,
         monospace;
 
+    font-size: 14px;
+
     cursor: pointer;
+
+    user-select: none;
+    -webkit-user-select: none;
+
+    touch-action: manipulation;
+
+    -webkit-tap-highlight-color: transparent;
+
+    transition:
+        background 0.15s ease,
+        transform 0.1s ease;
 }
 
 
@@ -376,10 +624,20 @@ body {
 }
 
 
+#editorControls button:active {
+    transform: scale(0.96);
+}
+
+
+/* ============================================================
+   RUN BUTTON
+   ============================================================ */
+
 #runCode {
     background: #14532d !important;
 
-    border-color: #22c55e !important;
+    border-color:
+        #22c55e !important;
 }
 
 
@@ -387,6 +645,10 @@ body {
     background: #166534 !important;
 }
 
+
+/* ============================================================
+   EDITOR STATUS
+   ============================================================ */
 
 #editorStatus {
     margin-left: auto;
@@ -410,17 +672,650 @@ body {
 
 
 /* ============================================================
+   TABLET
+   ============================================================ */
+
+@media (max-width: 900px) {
+
+    /*
+     * Put 2D and 3D on top of each other.
+     */
+
+    body {
+        grid-template-columns: 1fr;
+
+        grid-template-rows:
+            1fr
+            1fr;
+    }
+
+
+    #twod,
+    #threed {
+        width: 100%;
+        height: 100%;
+    }
+
+
+    #fps {
+        font-size: 24px;
+    }
+
+
+    #editor {
+        width: min(650px, 95vw);
+    }
+
+}
+
+
+/* ============================================================
    MOBILE
    ============================================================ */
 
 @media (max-width: 700px) {
 
-    #editor {
-        width: 100vw;
+    /* ========================================================
+       PAGE
+       ======================================================== */
+
+    body {
+        grid-template-columns: 1fr;
+
+        grid-template-rows:
+            1fr
+            1fr;
     }
 
+
+    /* ========================================================
+       FPS
+       ======================================================== */
+
     #fps {
+        top: 8px;
+        left: 8px;
+
+        font-size: 16px;
+    }
+
+
+    /* ========================================================
+       TEXT EDITOR BUTTON
+       ======================================================== */
+
+    #btn {
+        top: 8px;
+        right: 8px;
+
+        padding:
+            8px 12px;
+
+        font-size: 13px;
+
+        border-radius: 5px;
+    }
+
+
+    /* ========================================================
+       MOBILE CONTROLS
+       ======================================================== */
+
+    /*
+     * The whole control system is one layout.
+     *
+     * D-pad:
+     *
+     *          ↑
+     *
+     *       ←     →
+     *
+     *          ↓
+     *
+     * Zoom:
+     *
+     *                    +
+     *                    −
+     *
+     * No fixed-position children.
+     */
+
+    #mobileControls {
+        display: block;
+
+        position: fixed;
+
+        left: 8px;
+        bottom: 8px;
+
+        z-index: 1500;
+
+        /*
+         * 145px = D-pad area
+         * 50px  = gap for zoom controls
+         */
+
+        width: 205px;
+        height: 145px;
+
+        pointer-events: none;
+
+        transform: none;
+
+        transform-origin:
+            bottom left;
+    }
+
+
+    /* ========================================================
+       ALL MOBILE BUTTONS
+       ======================================================== */
+
+    #mobileControls button {
+        position: absolute;
+
+        width: 45px;
+        height: 45px;
+
+        padding: 0;
+
+        box-sizing: border-box;
+
+        border:
+            1px solid rgba(255, 255, 255, 0.45);
+
+        border-radius: 8px;
+
+        background:
+            rgba(0, 0, 0, 0.55);
+
+        color: white;
+
+        font-family:
+            Arial,
+            sans-serif;
+
+        font-size: 23px;
+        font-weight: bold;
+
+        cursor: pointer;
+
+        user-select: none;
+        -webkit-user-select: none;
+
+        pointer-events: auto;
+
+        touch-action: none;
+
+        -webkit-tap-highlight-color:
+            transparent;
+
+        transition:
+            background 0.1s ease,
+            transform 0.1s ease;
+    }
+
+
+    #mobileControls button:active {
+        background:
+            rgba(56, 189, 248, 0.75);
+
+        transform:
+            scale(0.93);
+    }
+
+
+    /* ========================================================
+       D-PAD
+       ======================================================== */
+
+    #touchUp {
+        left: 0;
+        top: 0;
+
+        margin-left: 50px;
+    }
+
+
+    #touchLeft {
+        left: 0;
+        top: 50px;
+    }
+
+
+    #touchRight {
+        left: 100px;
+        top: 50px;
+    }
+
+
+    #touchDown {
+        left: 0;
+        top: 100px;
+
+        margin-left: 50px;
+    }
+
+
+    /* ========================================================
+       ZOOM BUTTONS
+       ======================================================== */
+
+    /*
+     * IMPORTANT:
+     *
+     * These are ABSOLUTE, not fixed.
+     *
+     * They live inside the same control layout,
+     * so scaling the controls will never make them
+     * jump into the D-pad.
+     */
+
+    #touchZoomIn,
+    #touchZoomOut {
+        position: absolute !important;
+
+        left: 155px !important;
+        right: auto !important;
+
+        width: 45px;
+        height: 45px;
+
+        margin: 0;
+    }
+
+
+    #touchZoomIn {
+        top: 25px;
+
+        bottom: auto !important;
+    }
+
+
+    #touchZoomOut {
+        top: 75px;
+
+        bottom: auto !important;
+    }
+
+
+    /* ========================================================
+       EDITOR
+       ======================================================== */
+
+    #editor {
+        width: 100vw;
+
+        /*
+         * 100dvh handles mobile browser address bars
+         * better than 100vh.
+         */
+
+        height: 100dvh;
+
+        max-width: none;
+
+        box-shadow: none;
+    }
+
+
+    /* ========================================================
+       EDITOR HEADER
+       ======================================================== */
+
+    #editorHeader {
+        height: 50px;
+
+        padding:
+            0 10px;
+    }
+
+
+    #editorTitle {
+        font-size: 14px;
+    }
+
+
+    #closeEditor {
+        width: 40px;
+        height: 40px;
+
+        font-size: 27px;
+    }
+
+
+    /* ========================================================
+       TABS
+       ======================================================== */
+
+    #editorTabs {
+        height: 44px;
+    }
+
+
+    .editorTab {
+        flex: 1;
+
+        width: auto;
+
+        height: 44px;
+
+        font-size: 14px;
+    }
+
+
+    /* ========================================================
+       CODE EDITOR
+       ======================================================== */
+
+    #codeEditor {
+        padding: 12px;
+
+        font-size: 13px;
+
+        line-height: 1.5;
+
+        /*
+         * Smooth scrolling on iOS.
+         */
+
+        -webkit-overflow-scrolling:
+            touch;
+    }
+
+
+    /* ========================================================
+       EDITOR CONTROLS
+       ======================================================== */
+
+    #editorControls {
+        min-height: 60px;
+
+        height: auto;
+
+        padding:
+            8px 10px;
+
+        gap: 8px;
+    }
+
+
+    #editorControls button {
+        min-height: 42px;
+
+        padding:
+            8px 13px;
+
+        font-size: 13px;
+    }
+
+
+    #editorStatus {
+        font-size: 11px;
+    }
+
+}
+
+/* ============================================================
+   SMALL PHONES
+   ============================================================ */
+
+/* ============================================================
+   SMALL PHONES
+   ============================================================ */
+
+@media (max-width: 400px) {
+
+    /* ========================================================
+       FPS
+       ======================================================== */
+
+    #fps {
+        font-size: 14px;
+    }
+
+
+    /* ========================================================
+       TEXT EDITOR BUTTON
+       ======================================================== */
+
+    #btn {
+        padding:
+            7px 10px;
+
+        font-size: 12px;
+    }
+
+
+    /* ========================================================
+       MOBILE CONTROLS
+       ======================================================== */
+
+    #mobileControls {
+        left: 5px;
+        bottom: 5px;
+
+        width: 190px;
+        height: 132px;
+
+        transform:
+            scale(0.9);
+
+        transform-origin:
+            bottom left;
+    }
+
+
+    #mobileControls button {
+        width: 40px;
+        height: 40px;
+
         font-size: 20px;
+    }
+
+
+    /* ========================================================
+       D-PAD
+       ======================================================== */
+
+    #touchUp {
+        left: 0;
+        top: 0;
+
+        margin-left: 44px;
+    }
+
+
+    #touchLeft {
+        left: 0;
+        top: 44px;
+    }
+
+
+    #touchRight {
+        left: 88px;
+        top: 44px;
+    }
+
+
+    #touchDown {
+        left: 0;
+        top: 88px;
+
+        margin-left: 44px;
+    }
+
+
+    /* ========================================================
+       ZOOM
+       ======================================================== */
+
+    #touchZoomIn,
+    #touchZoomOut {
+        position: absolute !important;
+
+        left: 140px !important;
+        right: auto !important;
+
+        width: 40px;
+        height: 40px;
+
+        margin: 0;
+    }
+
+
+    #touchZoomIn {
+        top: 18px;
+
+        bottom: auto !important;
+    }
+
+
+    #touchZoomOut {
+        top: 68px;
+
+        bottom: auto !important;
+    }
+
+
+    /* ========================================================
+       EDITOR
+       ======================================================== */
+
+    #editorTitle {
+        font-size: 12px;
+    }
+
+
+    #codeEditor {
+        padding: 10px;
+
+        font-size: 12px;
+    }
+
+
+    /* ========================================================
+       EDITOR CONTROLS
+       ======================================================== */
+
+    #editorControls {
+        flex-wrap: wrap;
+
+        justify-content: center;
+    }
+
+
+    #editorControls button {
+        flex: 1;
+
+        min-width: 0;
+
+        padding:
+            8px 10px;
+    }
+
+
+    #editorStatus {
+        width: 100%;
+
+        margin-left: 0;
+
+        text-align: center;
+    }
+
+}
+
+
+/* ============================================================
+   VERY SMALL PHONES
+   ============================================================ */
+
+@media (max-width: 340px) {
+
+    #mobileControls {
+        left: 3px;
+        bottom: 3px;
+
+        width: 175px;
+        height: 120px;
+
+        transform:
+            scale(0.82);
+
+        transform-origin:
+            bottom left;
+    }
+
+
+    #mobileControls button {
+        width: 36px;
+        height: 36px;
+
+        font-size: 18px;
+    }
+
+
+    #touchUp {
+        left: 0;
+        top: 0;
+
+        margin-left: 40px;
+    }
+
+
+    #touchLeft {
+        left: 0;
+        top: 40px;
+    }
+
+
+    #touchRight {
+        left: 80px;
+        top: 40px;
+    }
+
+
+    #touchDown {
+        left: 0;
+        top: 80px;
+
+        margin-left: 40px;
+    }
+
+
+    #touchZoomIn,
+    #touchZoomOut {
+        position: absolute !important;
+
+        left: 130px !important;
+        right: auto !important;
+
+        width: 36px;
+        height: 36px;
+    }
+
+
+    #touchZoomIn {
+        top: 14px;
+
+        bottom: auto !important;
+    }
+
+
+    #touchZoomOut {
+        top: 62px;
+
+        bottom: auto !important;
+    }
+
+
+    #codeEditor {
+        font-size: 11px;
+    }
+
+
+    #editorTitle {
+        font-size: 11px;
     }
 
 }

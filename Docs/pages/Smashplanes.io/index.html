@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SmashPlanes</title>
+    <link rel="stylesheet" href="./styles/styles.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Contrail+One&family=Luckiest+Guy&family=Russo+One&display=swap');
+    </style>
+</head>
+<body>
+    <div class="main">
+        <h1 id="title">SmashPlanes</h1>
+
+
+        <div id="playerPreviewDiv">
+            <canvas id="playerPreview"></canvas>
+        </div>
+
+
+        <span class="modesWrapper">
+            <button class="modes" id="MODES" onclick="displayModes()">Modes</button>
+        </span>
+
+        <div id="modeOptions">
+            <button class="miniMode" id="createBtn" onclick="createGame()">Create</button>
+            <button class="miniMode" id="joinBtn" onclick="joinGame()">Join</button>
+        </div>
+
+        <!-- MODE LIST DROPDOWN -->
+        <div class="displayModes">
+            <button class="modeBtn" onclick="play('FFA')">FFA</button>
+            <button class="modeBtn" onclick="play('FFA_TEAMS')">FFA (TEAMS)</button>
+            <button class="modeBtn" onclick="play('CTF')">CTF</button>
+        </div>
+
+        <div id="userProfile">
+            <form class="username" onsubmit="return false;">
+                <input id="usernameInput" placeholder="Enter Username..." autocomplete="off">
+                <button id="customizeBtn" onclick="openCustomize()">Customize</button>
+            </form>
+        </div>
+
+        <!-- SETTINGS BUTTON (bottom-right) -->
+        <button id="settingsBtn" onclick="toggleSettings()">⚙️</button>
+
+        <!-- SETTINGS PANEL -->
+        <div id="settingsPanel">
+            <h2>Account Settings</h2>
+
+            <div class="passwordWrapper">
+                <input id="passwordInput" type="password" placeholder="Enter Password..." autocomplete="off">
+                <span id="togglePassword" class="eye"></span>
+            </div>
+
+            <button id="customize" onclick="handleAccount()">Save / Login</button>
+            <button id="deleteAccount" onclick="deleteAccount()">Delete Account</button>
+        </div>
+
+        <!-- POPUP -->
+        <div id="accountPopup">Account Created!</div>
+        
+
+
+
+    </div>
+
+    <div id="loadingScreen">
+        <div class="loader"></div>
+        <p>Loading...</p>
+    </div>
+
+
+    <div id="gameContainer">
+        <canvas id="gameCanvas"></canvas>
+        <div id="hud">
+            <div id="fps">FPS: --</div>
+            <div id="ping">Ping: -- ms</div>
+            <div id="speed">Speed: --</div>
+            <div id="altitude">Alt: --</div>
+        </div>
+    </div>
+
+    <div class="editor">
+        <canvas id = "editorCanvas"></canvas>
+    </div>
+    
+
+
+    <script src="https://cdn.babylonjs.com/babylon.js"></script>
+    <script src="https://cdn.babylonjs.com/loaders/babylonjs.loaders.min.js"></script>
+    <script src="https://cdn.babylonjs.com/materialsLibrary/babylonjs.materials.min.js"></script>
+    <script src="https://cdn.babylonjs.com/gui/babylon.gui.min.js"></script>
+    <!--<script src="https://cdn.jsdelivr.net/npm/simplex-noise@4.0.1/dist/esm/simplex-noise.min.js"></script>-->
+    <!--<script src="./src/simplex.js"></script>-->
+    <!--<script src="https://cdn.jsdelivr.net/npm/perlin-noise@2.0.0/dist/perlin.js"></script> -->
+    <script type="module" src="./src/main.js"></script>
+</body>
+</html>

@@ -4,7 +4,6 @@ const canvas2d = document.getElementById("twod");
 const canvas3d = document.getElementById("threed");
 const hud = document.getElementById("fps");
 
-
 // ============================================================
 // CANVAS RESOLUTION
 // ============================================================
@@ -72,24 +71,183 @@ function updateFPS(fps) {
 // INPUT
 // ============================================================
 
+// ============================================================
+// INPUT
+// ============================================================
+
 const keys = Object.create(null);
 
+
+// ============================================================
+// KEYBOARD INPUT
+// ============================================================
+
 function initKeys() {
+
     document.addEventListener("keydown", (e) => {
+
+        // Don't let the engine consume keyboard input
+        // while typing inside the code editor.
+        const target = e.target;
+
+        if (
+            target instanceof HTMLTextAreaElement ||
+            target instanceof HTMLInputElement
+        ) {
+            return;
+        }
+
         keys[e.code] = true;
+
+        if (
+            e.code === "ArrowUp" ||
+            e.code === "ArrowDown" ||
+            e.code === "ArrowLeft" ||
+            e.code === "ArrowRight" ||
+            e.code === "Space"
+        ) {
+            e.preventDefault();
+        }
     });
 
+
     document.addEventListener("keyup", (e) => {
+
         keys[e.code] = false;
+
     });
+
 
     // Prevent stuck keys if the browser loses focus.
     window.addEventListener("blur", () => {
+
         for (const key in keys) {
             keys[key] = false;
         }
+
     });
 }
+
+
+
+// ============================================================
+// TOUCH INPUT
+// ============================================================
+//
+// The mobile buttons temporarily act like keyboard keys.
+//
+// This means your existing camera code:
+//
+//     keys["ArrowLeft"]
+//     keys["ArrowRight"]
+//     keys["ArrowUp"]
+//     keys["ArrowDown"]
+//     keys["KeyW"]
+//     keys["KeyS"]
+//
+// continues to work without changing the camera system.
+// ============================================================
+
+function bindTouchButton(id, key) {
+
+    const button = document.getElementById(id);
+
+    if (!button) return;
+
+
+    button.addEventListener("pointerdown", (event) => {
+
+        event.preventDefault();
+
+        keys[key] = true;
+
+        button.setPointerCapture(event.pointerId);
+
+    });
+
+
+    button.addEventListener("pointerup", (event) => {
+
+        event.preventDefault();
+
+        keys[key] = false;
+
+        if (button.hasPointerCapture(event.pointerId)) {
+            button.releasePointerCapture(event.pointerId);
+        }
+
+    });
+
+
+    button.addEventListener("pointercancel", (event) => {
+
+        keys[key] = false;
+
+    });
+
+
+    button.addEventListener("lostpointercapture", () => {
+
+        keys[key] = false;
+
+    });
+
+
+    button.addEventListener("contextmenu", (event) => {
+
+        event.preventDefault();
+
+    });
+
+}
+
+
+// ============================================================
+// MOBILE CAMERA BUTTONS
+// ============================================================
+
+bindTouchButton(
+    "touchUp",
+    "ArrowUp"
+);
+
+bindTouchButton(
+    "touchDown",
+    "ArrowDown"
+);
+
+bindTouchButton(
+    "touchLeft",
+    "ArrowLeft"
+);
+
+bindTouchButton(
+    "touchRight",
+    "ArrowRight"
+);
+
+
+// ============================================================
+// MOBILE ZOOM BUTTONS
+// ============================================================
+//
+// These use W/S because your 3D camera already uses:
+//
+// W = zoom in
+// S = zoom out
+//
+// They also work with the existing 3D camera code.
+// ============================================================
+
+bindTouchButton(
+    "touchZoomIn",
+    "KeyW"
+);
+
+bindTouchButton(
+    "touchZoomOut",
+    "KeyS"
+);
 
 initKeys();
 
@@ -390,22 +548,23 @@ async function ready3D() {
     // --------------------------------------------------------
     // Ground
     // --------------------------------------------------------
+    const subdivisions =
+        window.innerWidth <= 700
+            ? 80
+            : 200;
+
 
     const ground = new GUBILO.MeshCreator.Plane(
         "ground",
 
-        // position
         0,
         -0.2,
         0,
 
-        // size
         8,
 
-        // subdivisions
-        200,
+        subdivisions,
 
-        // color
         {
             red: 1,
             green: 1,
@@ -414,6 +573,12 @@ async function ready3D() {
         }
     );
 
+    window.scene3D = scene;
+    window.cube = cube;
+    window.cube2 = cube2;
+    window.cube3 = cube3;
+    window.ground = ground;
+    window.cam = cam;
 
     console.log(
         "Meshes:",
@@ -434,22 +599,22 @@ async function ready3D() {
     let i = 0;
 
 
-engine3d.runRenderLoop(() => {
-    //if (!engine3d._deltaTime) return;
-    const dt = engine3d._deltaTime;
+    engine3d.runRenderLoop(() => {
+        //if (!engine3d._deltaTime) return;
+        const dt = engine3d._deltaTime;
 
-    const rotationSpeed = 0.6; // radians per second
+        const rotationSpeed = 0.6; // radians per second
 
-    cube.rotation.x += rotationSpeed * dt;
-    cube2.rotation.y += rotationSpeed * dt;
-    cube3.rotation.z += rotationSpeed * dt;
+        cube.rotation.x += rotationSpeed * dt;
+        cube2.rotation.y += rotationSpeed * dt;
+        cube3.rotation.z += rotationSpeed * dt;
 
-    updatePlane(ground, dt);
+        updatePlane(ground, dt);
 
-    handleKeys3D(cam, 1, dt);
+        handleKeys3D(cam, 1, dt);
 
-    updateFPS(engine3d._fps);
-});
+        updateFPS(engine3d._fps);
+    });
 }
 
 
@@ -522,7 +687,6 @@ function getHeight(x, z, t) {
 let waveTime = 0;
 
 function updatePlane(ground, dt) {
-
     const stride = 10;
 
     const speed = 0.6;
@@ -535,14 +699,16 @@ function updatePlane(ground, dt) {
     // --------------------------------------------------------
     // Grid
     // --------------------------------------------------------
-
-    const gridSize = 201;
     const vertexCount = ground.vertexCount;
 
-    // Plane is 8 units wide with 200 subdivisions.
-    const spacing = 8 / 200;
+    const subdivisions =
+        window.innerWidth <= 700
+            ? 80
+            : 200;
 
+    const gridSize = subdivisions + 1;
 
+    const spacing = 8 / subdivisions;
 
 
     // ========================================================
@@ -702,3 +868,312 @@ function updatePlane(ground, dt) {
 
     ground.verticesDirty = true;
 }
+// ============================================================
+// TEXT EDITOR
+// ============================================================
+
+const editor = document.getElementById("editor");
+const editorButton = document.getElementById("btn");
+const closeEditor = document.getElementById("closeEditor");
+
+console.log("Editor:", editor);
+console.log("Editor button:", editorButton);
+console.log("Close button:", closeEditor);
+
+
+// ============================================================
+// OPEN EDITOR
+// ============================================================
+
+if (editorButton && editor) {
+
+    editorButton.addEventListener("click", () => {
+
+        console.log("Opening editor");
+
+        editor.classList.add("open");
+
+    });
+
+}
+
+
+// ============================================================
+// CLOSE EDITOR
+// ============================================================
+
+if (closeEditor && editor) {
+
+    closeEditor.addEventListener("click", () => {
+
+        console.log("Closing editor");
+
+        editor.classList.remove("open");
+
+    });
+
+}
+
+
+// ============================================================
+// ESCAPE TO CLOSE
+// ============================================================
+
+document.addEventListener("keydown", (event) => {
+
+    if (event.key === "Escape" && editor) {
+
+        editor.classList.remove("open");
+
+    }
+
+});
+
+// ============================================================
+// CODE EDITOR
+// ============================================================
+
+const codeEditor = document.getElementById("codeEditor");
+
+const tab2d = document.getElementById("tab2d");
+const tab3d = document.getElementById("tab3d");
+
+const runCode = document.getElementById("runCode");
+const resetCode = document.getElementById("resetCode");
+
+const editorStatus = document.getElementById("editorStatus");
+
+
+// ============================================================
+// DEFAULT CODE
+// ============================================================
+
+const defaultCode2D = `// GUBILO 2D
+
+console.log("2D code running");
+
+`;
+
+const defaultCode3D = `// GUBILO 3D
+
+console.log("3D code running");
+
+`;
+
+let currentTab = "2d";
+
+let code2D = defaultCode2D;
+let code3D = defaultCode3D;
+
+
+// ============================================================
+// LOAD CODE
+// ============================================================
+
+function loadEditorCode() {
+
+    if (!codeEditor)
+        return;
+
+    if (currentTab === "2d") {
+        codeEditor.value = code2D;
+    } else {
+        codeEditor.value = code3D;
+    }
+
+}
+
+
+// ============================================================
+// SAVE CURRENT CODE
+// ============================================================
+
+function saveEditorCode() {
+
+    if (!codeEditor)
+        return;
+
+    if (currentTab === "2d") {
+        code2D = codeEditor.value;
+    } else {
+        code3D = codeEditor.value;
+    }
+
+}
+
+
+// ============================================================
+// EDITOR STATUS
+// ============================================================
+
+function setEditorStatus(message, type = "") {
+
+    if (!editorStatus)
+        return;
+
+    editorStatus.textContent = message;
+
+    editorStatus.classList.remove(
+        "success",
+        "error"
+    );
+
+    if (type) {
+        editorStatus.classList.add(type);
+    }
+
+}
+
+
+// ============================================================
+// 2D TAB
+// ============================================================
+
+if (tab2d) {
+
+    tab2d.addEventListener("click", () => {
+
+        saveEditorCode();
+
+        currentTab = "2d";
+
+        tab2d.classList.add("active");
+
+        if (tab3d) {
+            tab3d.classList.remove("active");
+        }
+
+        loadEditorCode();
+
+        setEditorStatus("2D");
+
+    });
+
+}
+
+
+// ============================================================
+// 3D TAB
+// ============================================================
+
+if (tab3d) {
+
+    tab3d.addEventListener("click", () => {
+
+        saveEditorCode();
+
+        currentTab = "3d";
+
+        tab3d.classList.add("active");
+
+        if (tab2d) {
+            tab2d.classList.remove("active");
+        }
+
+        loadEditorCode();
+
+        setEditorStatus("3D");
+
+    });
+
+}
+
+
+// ============================================================
+// RUN
+// ============================================================
+
+if (runCode) {
+
+    runCode.addEventListener("click", () => {
+
+        saveEditorCode();
+
+        try {
+
+            setEditorStatus(
+                "Running...",
+                ""
+            );
+
+
+            const code =
+                currentTab === "2d"
+                    ? code2D
+                    : code3D;
+
+
+            // Run the code.
+            //
+            // This gives the editor access to
+            // your existing global GUBILO objects.
+
+            const result = Function(code)();
+
+
+            console.log(
+                `GUBILO ${currentTab.toUpperCase()} editor result:`,
+                result
+            );
+
+
+            setEditorStatus(
+                "Code ran successfully",
+                "success"
+            );
+
+        } catch (error) {
+
+            console.error(
+                "Editor error:",
+                error
+            );
+
+
+            setEditorStatus(
+                "Error: " + error.message,
+                "error"
+            );
+
+        }
+
+    });
+
+}
+
+
+// ============================================================
+// RESET
+// ============================================================
+
+if (resetCode) {
+
+    resetCode.addEventListener("click", () => {
+
+        if (currentTab === "2d") {
+
+            code2D = defaultCode2D;
+
+        } else {
+
+            code3D = defaultCode3D;
+
+        }
+
+        loadEditorCode();
+
+        setEditorStatus(
+            "Reset",
+            "success"
+        );
+
+    });
+
+}
+
+
+// ============================================================
+// INITIAL CODE
+// ============================================================
+
+loadEditorCode();

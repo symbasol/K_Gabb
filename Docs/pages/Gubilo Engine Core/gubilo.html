@@ -25,10 +25,6 @@
          MAIN ENGINE UI
          ====================================================== -->
 
-    <button id="btn">
-        Text Editor
-    </button>
-
     <span id="fps">
         FPS: 0
     </span>
@@ -44,8 +40,63 @@
 
 
     <!-- ======================================================
+         MOBILE 3D CONTROLS
+         ====================================================== -->
+
+    <div id="mobileControls">
+
+        <button
+            id="touchUp"
+            aria-label="Move camera up"
+        >
+            ↑
+        </button>
+
+        <button
+            id="touchLeft"
+            aria-label="Rotate camera left"
+        >
+            ←
+        </button>
+
+        <button
+            id="touchRight"
+            aria-label="Rotate camera right"
+        >
+            →
+        </button>
+
+        <button
+            id="touchDown"
+            aria-label="Move camera down"
+        >
+            ↓
+        </button>
+
+        <button
+            id="touchZoomIn"
+            aria-label="Zoom in"
+        >
+            +
+        </button>
+
+        <button
+            id="touchZoomOut"
+            aria-label="Zoom out"
+        >
+            −
+        </button>
+
+    </div>
+
+
+    <!-- ======================================================
          CODE EDITOR
          ====================================================== -->
+
+    <button id="btn">
+        Text Editor
+    </button>
 
     <div id="editor">
 
@@ -60,11 +111,6 @@
             </button>
 
         </div>
-
-
-        <!-- ==================================================
-             TABS
-             ================================================== -->
 
         <div id="editorTabs">
 
@@ -84,11 +130,6 @@
 
         </div>
 
-
-        <!-- ==================================================
-             EDITOR BODY
-             ================================================== -->
-
         <div id="editorBody">
 
             <textarea
@@ -97,11 +138,6 @@
             ></textarea>
 
         </div>
-
-
-        <!-- ==================================================
-             CONTROLS
-             ================================================== -->
 
         <div id="editorControls">
 
@@ -127,6 +163,7 @@
          ====================================================== -->
 
     <script src="./src/gubilo.js"></script>
+
 
     <!-- ======================================================
          MAIN

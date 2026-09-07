@@ -1,38 +1,72 @@
+/* =========================================================
+   ROOT VARIABLES
+   ========================================================= */
+
+:root {
+    --blue: #3498db;
+    --cyan: #00ffff;
+
+    --white: #ffffff;
+    --black: #000000;
+
+    --text: #222222;
+    --text-light: #666666;
+
+    --header-bg: rgba(255, 255, 255, 0.96);
+    --overlay: rgba(0, 0, 0, 0.5);
+
+    --content-width: 1200px;
+    --header-height: 58px;
+}
+
+
+/* =========================================================
+   RESET / GENERAL
+   ========================================================= */
+
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+html {
+    margin: 0;
+    padding: 0;
+
+    scroll-behavior: smooth;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+
+    overflow-x: hidden;
+
+    font-family: "Roboto", sans-serif;
+    font-weight: 400;
+
+    color: var(--text);
+    background: var(--white);
+}
+
+img {
+    display: block;
+    max-width: 100%;
+}
+
 .roboto {
     font-family: "Roboto", sans-serif;
     font-optical-sizing: auto;
     font-weight: 500;
     font-style: normal;
-    font-variation-settings:
-        "width" 100;
+    font-variation-settings: "width" 100;
 }
 
 
-/* =========================
-   GENERAL
-   ========================= */
-
-html,
-body {
-    margin: 0;
-    padding: 0;
-
-    font-family: "Roboto", sans-serif;
-    font-optical-sizing: auto;
-    font-weight: 500;
-    font-style: normal;
-    font-variation-settings:
-        "width" 100;
-}
-
-main {
-    width: 97.5vw;
-}
-
-
-/* =========================
+/* =========================================================
    HEADER
-   ========================= */
+   ========================================================= */
 
 .page-header {
     margin: 0;
@@ -40,7 +74,7 @@ main {
 }
 
 
-/* Background of header */
+/* Header background */
 
 .page-header-div {
     position: fixed;
@@ -48,15 +82,18 @@ main {
     top: 0;
     left: 0;
 
-    width: 100vw;
-    height: 58px;
+    width: 100%;
+    height: var(--header-height);
 
     margin: 0;
     padding: 0;
 
     background-color: transparent;
 
-    z-index: 149;
+    /*
+     * Behind logo and title.
+     */
+    z-index: 1000;
 
     transition:
         background-color 0.3s ease,
@@ -64,92 +101,107 @@ main {
 }
 
 
-/* Header when scrolling */
+/* Header after scrolling */
 
 body.scrolled .page-header-div {
-    background-color: rgba(255, 255, 255, 0.95);
+    background-color: var(--header-bg);
 
     box-shadow:
         0 2px 10px rgba(0, 0, 0, 0.1);
 }
 
 
-/* =========================
+/* =========================================================
    TITLE
-   ========================= */
-
-/* =========================
-   TITLE
-   ========================= */
+   ========================================================= */
 
 .title {
-    display: flex;
-
-    align-items: center;
-
     position: fixed;
 
-    top: 15px;
+    top: 0;
     left: 120px;
 
-    width: 100%;
+    height: var(--header-height);
+
+    width: auto;
 
     margin: 0;
+    padding: 0;
 
-    background: transparent;
+    display: flex;
+    align-items: center;
+
+    /*
+     * Above header background.
+     * Below hamburger and sidebar.
+     */
+    z-index: 1050;
 
     font-size: 25px;
+    font-weight: 700;
 
-    z-index: 150;
+    line-height: 1;
+
+    white-space: nowrap;
+}
+
+.title a {
+    color: var(--white);
+
+    text-decoration: none;
 
     transition: color 0.3s ease;
 }
 
-/* Make the title link look like normal text */
-.title a {
-    color: #fff;
-    text-decoration: none;
-}
-
 .title a:visited {
-    color: #fff;
+    color: var(--white);
 }
 
 .title a:hover {
-    color: #fff;
+    color: var(--cyan);
+
     text-decoration: none;
 }
 
-/* Title becomes blue when scrolling */
 body.scrolled .title a {
-    color: #3498db;
+    color: var(--blue);
 }
 
 
-/* =========================
+/* =========================================================
    LOGO
-   ========================= */
+   ========================================================= */
 
 .logo {
-    display: flex;
-
-    gap: 10px;
-
     position: fixed;
 
     top: 5px;
     left: 60px;
 
-    z-index: 151;
-
     width: 50px;
     height: 50px;
+
+    margin: 0;
+    padding: 0;
+
+    object-fit: contain;
+
+    /*
+     * IMPORTANT:
+     *
+     * Higher than header background/title,
+     * but LOWER than sidebar.
+     *
+     * This means the logo is visible normally,
+     * but disappears underneath the sidebar when opened.
+     */
+    z-index: 1060;
 }
 
 
-/* =========================
+/* =========================================================
    HAMBURGER BUTTON
-   ========================= */
+   ========================================================= */
 
 .menu-btn {
     position: fixed;
@@ -157,10 +209,13 @@ body.scrolled .title a {
     top: 20px;
     left: 20px;
 
-    width: 20px;
-    height: 20px;
+    /*
+     * Same dimensions as your reference CSS.
+     */
+    width: 25px;
+    height: 18px;
 
-    margin-right: 20px;
+    margin: 0;
     padding: 0;
 
     background: none;
@@ -172,7 +227,10 @@ body.scrolled .title a {
     flex-direction: column;
     justify-content: space-between;
 
-    z-index: 1000;
+    /*
+     * Above sidebar.
+     */
+    z-index: 1200;
 
     transition:
         transform 0.2s ease;
@@ -187,7 +245,7 @@ body.scrolled .title a {
     width: 25px;
     height: 3px;
 
-    background: #fff;
+    background: var(--white);
 
     border-radius: 5px;
 
@@ -198,33 +256,30 @@ body.scrolled .title a {
 }
 
 
-/* Hamburger becomes black when scrolling */
+/* Black when scrolling */
 
 body.scrolled .menu-btn span {
-    background: #000;
+    background: var(--black);
 }
 
 
-/* =========================
-   HAMBURGER HOVER
-   ========================= */
+/* Hover */
 
 .menu-btn:hover {
     transform: scale(1.05);
 }
 
 .menu-btn:hover span {
-    background: #3498db !important;
+    background: var(--blue) !important;
 }
 
 
-/* =========================
+/* =========================================================
    HAMBURGER → X
-   ========================= */
+   ========================================================= */
 
 .menu-btn.active span:nth-child(1) {
-    transform: translateY(8.5px) rotate(45deg);
-    color: black;
+    transform: translateY(7.5px) rotate(45deg);
 }
 
 .menu-btn.active span:nth-child(2) {
@@ -232,41 +287,51 @@ body.scrolled .menu-btn span {
 }
 
 .menu-btn.active span:nth-child(3) {
-    transform: translateY(-8.5px) rotate(-45deg);
-    color: black;
+    transform: translateY(-7.5px) rotate(-45deg);
 }
 
-/* Hamburger becomes black when sidebar is open */
+
+/*
+ * Black while sidebar is open.
+ */
+
 .menu-btn.active span {
-    background: #000;
+    background: var(--black);
 }
 
-/* =========================
+
+/* =========================================================
    SIDEBAR
-   ========================= */
+   ========================================================= */
 
 .sidebar {
     position: fixed;
 
     top: 0;
-    left: -225px;
+    left: -250px;
 
-    width: 175px;
+    width: 225px;
     height: 100vh;
 
-    padding: 60px 25px 25px;
+    padding: 70px 15px 25px;
 
-    background: #ffffff;
+    background: var(--white);
 
     box-shadow:
-        2px 0 10px rgba(0, 0, 0, 0.15);
+        2px 0 12px rgba(0, 0, 0, 0.15);
 
     overflow-y: auto;
 
-    z-index: 200;
+    /*
+     * ABOVE LOGO.
+     *
+     * This is what makes the logo go behind
+     * the sidebar.
+     */
+    z-index: 1150;
 
     transition:
-        left 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+        left 0.3s ease;
 }
 
 
@@ -277,37 +342,46 @@ body.scrolled .menu-btn span {
 }
 
 
-/* =========================
+/* =========================================================
    SIDEBAR LINKS
-   ========================= */
+   ========================================================= */
 
 .sidebar a {
     display: block;
 
-    padding: 15px 20px;
+    width: 100%;
 
-    color: #000;
+    padding: 14px 18px;
+
+    margin-bottom: 3px;
+
+    border-radius: 7px;
+
+    color: var(--black);
 
     text-decoration: none;
 
     font-size: 16px;
+    font-weight: 500;
 
     transition:
-        all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+        background-color 0.25s ease,
+        color 0.25s ease,
+        padding-left 0.25s ease;
 }
 
 .sidebar a:hover {
-    background: #f2f2f2;
+    background-color: #f2f2f2;
 
-    padding-left: 30px;
+    padding-left: 26px;
 
-    color: #3498db;
+    color: var(--blue);
 }
 
 
-/* =========================
+/* =========================================================
    GREY OVERLAY
-   ========================= */
+   ========================================================= */
 
 #grey {
     position: fixed;
@@ -315,54 +389,59 @@ body.scrolled .menu-btn span {
     top: 0;
     left: 0;
 
-    width: 100vw;
+    width: 100%;
     height: 100vh;
 
-    background-color: rgba(0, 0, 0, 0);
+    background-color: transparent;
 
-    z-index: 199;
+    /*
+     * Below sidebar.
+     */
+    z-index: 1100;
 
     opacity: 0;
-
     visibility: hidden;
+    pointer-events: none;
 
     transition:
         opacity 0.3s ease,
-        background-color 0.3s ease;
+        visibility 0.3s ease;
 }
 
 
 /* Overlay visible */
 
 #grey.active {
-    background-color: rgba(0, 0, 0, 0.5);
+    background-color: var(--overlay);
 
     opacity: 1;
-
     visibility: visible;
+
+    pointer-events: auto;
 }
 
 
-/* =========================
+/* =========================================================
    BANNER
-   ========================= */
+   ========================================================= */
 
 .banner-container {
     position: relative;
 
-    left: 0;
+    width: 100%;
+
+    margin: 0;
+    padding: 0;
 
     display: flex;
 
     justify-content: center;
     align-items: center;
 
-    color: white;
+    overflow: hidden;
 
-    margin: 0;
-    padding: 0;
+    color: var(--white);
 }
-
 
 .banner-container img {
     display: block;
@@ -370,97 +449,630 @@ body.scrolled .menu-btn span {
     width: 100%;
     height: auto;
 
-    margin: 0;
-    padding: 0;
+    min-height: 280px;
+
+    object-fit: cover;
 
     filter: brightness(50%);
 }
 
 
-/* =========================
+/* =========================================================
    BANNER TEXT
-   ========================= */
+   ========================================================= */
 
 .banner-container .text-wrapper {
     position: absolute;
+
+    top: 50%;
+    left: 50%;
+
+    transform: translate(-50%, -50%);
+
+    width: 90%;
 
     display: flex;
 
     flex-direction: column;
 
     align-items: center;
+    justify-content: center;
+
+    text-align: center;
 }
 
-
 .banner-container .text-wrapper .text {
-    font-size: 60px;
+    margin: 0 0 15px;
+
+    color: var(--white);
 
     font-family: "Roboto", sans-serif;
 
-    font-weight: 500;
-}
+    font-size: clamp(36px, 6vw, 60px);
 
+    font-weight: 500;
+
+    line-height: 1.1;
+
+    text-shadow:
+        0 3px 10px rgba(0, 0, 0, 0.5);
+}
 
 .banner-container .text-wrapper .box {
     width: 130px;
     height: 10px;
 
-    background-color: #00ffff;
+    background-color: var(--cyan);
+
+    border-radius: 5px;
 }
 
 
-/* =========================
+/* =========================================================
    CONTENT
-   ========================= */
+   ========================================================= */
 
 .content {
-    position: absolute;
-    top: 360px;
-    left: 16px;
+    width: 100%;
+    max-width: var(--content-width);
 
-    width: calc(100% - 32px);
-    padding: 44px;
+    margin: 0 auto;
 
-    box-sizing: border-box;
+    padding: 55px 40px 30px;
 }
+
+
+/* =========================================================
+   MAIN
+   ========================================================= */
 
 main {
     width: 100%;
 
     display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 40px;
+
+    grid-template-columns:
+        repeat(3, minmax(0, 1fr));
+
+    column-gap: 40px;
+    row-gap: 45px;
 }
+
+
+/* =========================================================
+   TENNIS SECTIONS
+   ========================================================= */
 
 .beginning,
 .current,
 .aim {
     width: 100%;
-    box-sizing: border-box;
+
+    min-width: 0;
 }
+
+
+/* =========================================================
+   HEADINGS
+   ========================================================= */
 
 .beginning .heading,
 .current .heading,
 .aim .heading {
+    margin: 0 0 18px;
+
+    color: var(--text);
+
+    font-size: 28px;
+
+    font-weight: 700;
+
+    line-height: 1.25;
+
     text-align: center;
 }
+
+
+/* =========================================================
+   TEXT
+   ========================================================= */
 
 .beginning .text,
 .current .text,
 .aim .text {
     width: 100%;
+
+    margin: 0;
+
+    color: var(--text-light);
+
+    font-size: 17px;
+
     font-weight: 400;
-    line-height: 1.6;
+
+    line-height: 1.75;
+
+    text-align: center;
 }
 
-@media (max-width: 800px) {
+
+/* =========================================================
+   FOOTER
+   ========================================================= */
+
+footer {
+    grid-column: 1 / -1;
+
+    width: 100%;
+
+    margin-top: 25px;
+
+    text-align: center;
+}
+
+footer hr {
+    width: 100%;
+
+    margin: 0 0 20px;
+
+    border: 0;
+
+    border-top: 1px solid #dddddd;
+}
+
+footer p {
+    margin: 0;
+
+    color: #777777;
+
+    font-size: 14px;
+
+    line-height: 1.5;
+}
+
+
+/* =========================================================
+   TABLET
+   ========================================================= */
+
+@media (max-width: 900px) {
+
+    .content {
+        padding-left: 30px;
+        padding-right: 30px;
+    }
+
+
     main {
-        grid-template-columns: 1fr;
+        column-gap: 25px;
+
+        row-gap: 40px;
+    }
+
+
+    .beginning .heading,
+    .current .heading,
+    .aim .heading {
+        font-size: 24px;
+    }
+
+
+    .beginning .text,
+    .current .text,
+    .aim .text {
+        font-size: 16px;
+    }
+
+
+    /* Header */
+
+    .title {
+        left: 105px;
+
+        font-size: 22px;
+    }
+
+
+    .logo {
+        left: 55px;
+
+        width: 45px;
+        height: 45px;
     }
 }
 
-/*
-.content.active {
-    left: 258px;
+
+/* =========================================================
+   MOBILE
+   ========================================================= */
+
+@media (max-width: 600px) {
+
+    :root {
+        --header-height: 55px;
+    }
+
+
+    /* -------------------------
+       HEADER
+       ------------------------- */
+
+    .page-header-div {
+        height: 55px;
+    }
+
+
+    /* -------------------------
+       HAMBURGER
+       ------------------------- */
+
+    .menu-btn {
+        top: 18px;
+        left: 15px;
+
+        /*
+         * Same proportional height as desktop.
+         */
+        width: 23px;
+        height: 17px;
+    }
+
+    .menu-btn span {
+        width: 23px;
+        height: 3px;
+    }
+
+    .menu-btn.active span:nth-child(1) {
+        transform: translateY(7px) rotate(45deg);
+    }
+
+    .menu-btn.active span:nth-child(3) {
+        transform: translateY(-7px) rotate(-45deg);
+    }
+
+
+    /* -------------------------
+       LOGO
+       ------------------------- */
+
+    .logo {
+        top: 7px;
+        left: 50px;
+
+        width: 40px;
+        height: 40px;
+
+        /*
+         * Still below sidebar.
+         */
+        z-index: 1060;
+    }
+
+
+    /* -------------------------
+       TITLE
+       ------------------------- */
+
+    .title {
+        left: 98px;
+
+        height: 55px;
+
+        font-size: 18px;
+    }
+
+
+    /* -------------------------
+       SIDEBAR
+       ------------------------- */
+
+    .sidebar {
+        width: 240px;
+
+        left: -260px;
+
+        padding-top: 70px;
+    }
+
+
+    /* -------------------------
+       BANNER
+       ------------------------- */
+
+    .banner-container img {
+        width: 100%;
+
+        height: 45vw;
+
+        min-height: 230px;
+
+        object-fit: cover;
+    }
+
+    .banner-container .text-wrapper .text {
+        font-size: clamp(32px, 9vw, 48px);
+
+        margin-bottom: 12px;
+    }
+
+    .banner-container .text-wrapper .box {
+        width: 90px;
+
+        height: 7px;
+    }
+
+
+    /* -------------------------
+       CONTENT
+       ------------------------- */
+
+    .content {
+        width: 100%;
+
+        padding: 40px 20px 25px;
+    }
+
+
+    /* -------------------------
+       MAIN
+       ------------------------- */
+
+    main {
+        display: grid;
+
+        grid-template-columns: 1fr;
+
+        gap: 40px;
+    }
+
+
+    /* -------------------------
+       TENNIS SECTIONS
+       ------------------------- */
+
+    .beginning,
+    .current,
+    .aim {
+        grid-column: 1;
+
+        width: 100%;
+    }
+
+
+    /* -------------------------
+       HEADINGS
+       ------------------------- */
+
+    .beginning .heading,
+    .current .heading,
+    .aim .heading {
+        margin-bottom: 15px;
+
+        font-size: 25px;
+
+        line-height: 1.3;
+    }
+
+
+    /* -------------------------
+       TEXT
+       ------------------------- */
+
+    .beginning .text,
+    .current .text,
+    .aim .text {
+        font-size: 16px;
+
+        line-height: 1.75;
+
+        text-align: left;
+    }
+
+
+    /* -------------------------
+       FOOTER
+       ------------------------- */
+
+    footer {
+        margin-top: 10px;
+    }
+
+    footer p {
+        font-size: 13px;
+    }
 }
-*/
+
+
+/* =========================================================
+   SMALL MOBILE
+   ========================================================= */
+
+@media (max-width: 400px) {
+
+    /* -------------------------
+       HAMBURGER
+       ------------------------- */
+
+    .menu-btn {
+        top: 18px;
+        left: 12px;
+
+        width: 22px;
+        height: 16px;
+    }
+
+    .menu-btn span {
+        width: 22px;
+        height: 3px;
+    }
+
+    .menu-btn.active span:nth-child(1) {
+        transform: translateY(6.5px) rotate(45deg);
+    }
+
+    .menu-btn.active span:nth-child(3) {
+        transform: translateY(-6.5px) rotate(-45deg);
+    }
+
+
+    /* -------------------------
+       LOGO
+       ------------------------- */
+
+    .logo {
+        top: 9px;
+        left: 42px;
+
+        width: 35px;
+        height: 35px;
+
+        z-index: 1060;
+    }
+
+
+    /* -------------------------
+       TITLE
+       ------------------------- */
+
+    .title {
+        left: 85px;
+
+        font-size: 16px;
+    }
+
+
+    /* -------------------------
+       BANNER
+       ------------------------- */
+
+    .banner-container img {
+        min-height: 210px;
+    }
+
+    .banner-container .text-wrapper .text {
+        font-size: 30px;
+    }
+
+    .banner-container .text-wrapper .box {
+        width: 75px;
+
+        height: 6px;
+    }
+
+
+    /* -------------------------
+       CONTENT
+       ------------------------- */
+
+    .content {
+        padding: 30px 15px 20px;
+    }
+
+
+    /* -------------------------
+       HEADINGS
+       ------------------------- */
+
+    .beginning .heading,
+    .current .heading,
+    .aim .heading {
+        font-size: 23px;
+    }
+
+
+    /* -------------------------
+       TEXT
+       ------------------------- */
+
+    .beginning .text,
+    .current .text,
+    .aim .text {
+        font-size: 15px;
+
+        line-height: 1.7;
+    }
+}
+
+
+/* =========================================================
+   VERY SMALL PHONES
+   ========================================================= */
+
+@media (max-width: 340px) {
+
+    .title {
+        left: 80px;
+
+        font-size: 15px;
+    }
+
+
+    .logo {
+        left: 39px;
+
+        width: 34px;
+        height: 34px;
+
+        z-index: 1060;
+    }
+
+
+    .content {
+        padding-left: 12px;
+        padding-right: 12px;
+    }
+
+
+    .beginning .heading,
+    .current .heading,
+    .aim .heading {
+        font-size: 21px;
+    }
+
+
+    .beginning .text,
+    .current .text,
+    .aim .text {
+        font-size: 14px;
+    }
+}
+
+
+/* =========================================================
+   TOUCH DEVICES
+   ========================================================= */
+
+@media (hover: none) {
+
+    .menu-btn:hover {
+        transform: none;
+    }
+
+    .sidebar a:hover {
+        padding-left: 18px;
+
+        background-color: transparent;
+
+        color: var(--black);
+    }
+}
+
+
+/* =========================================================
+   REDUCED MOTION
+   ========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+
+    html {
+        scroll-behavior: auto;
+    }
+
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+}
