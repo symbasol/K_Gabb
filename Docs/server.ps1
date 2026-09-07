@@ -15,7 +15,6 @@ try {
     $listener.Prefixes.Add("http://localhost:8765/")
 
     Write-Host "Starting server..."
-a
     $listener.Start()
 
     Write-Host ""

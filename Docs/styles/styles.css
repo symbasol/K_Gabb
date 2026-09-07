@@ -1,19 +1,82 @@
-.roboto {
-    font-family: "Roboto", sans-serif;
-    font-optical-sizing: auto;
-    font-weight: 500;
-    font-style: normal;
-    font-variation-settings:
-        "width" 100;
+/* =========================================================
+   ROOT VARIABLES
+   ========================================================= */
+
+:root {
+    --blue: #3498db;
+    --blue-dark: #217dbb;
+    --cyan: #00e5ff;
+
+    --white: #ffffff;
+    --black: #000000;
+
+    --text: #222222;
+    --text-light: #666666;
+
+    --header-bg: rgba(255, 255, 255, 0.96);
+    --overlay-dark: rgba(0, 0, 0, 0.5);
+
+    --shadow: 0 4px 20px rgba(0, 0, 0, 0.12);
+    --shadow-hover: 0 10px 30px rgba(0, 0, 0, 0.18);
+
+    --font-main: "Roboto", sans-serif;
+
+    --header-height: 60px;
+    --content-width: 1200px;
 }
 
+
+/* =========================================================
+   GLOBAL RESET
+   ========================================================= */
+
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+html {
+    margin: 0;
+    padding: 0;
+    scroll-behavior: smooth;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+
+    font-family: var(--font-main);
+    font-weight: 400;
+    font-style: normal;
+
+    color: var(--text);
+    background-color: var(--white);
+
+    overflow-x: hidden;
+}
+
+img {
+    display: block;
+    max-width: 100%;
+}
+
+button,
+a {
+    font-family: inherit;
+}
+
+
+/* =========================================================
+   UTILITY CLASSES
+   ========================================================= */
 
 .rounded-square {
     border-radius: 20px;
 }
 
 .circle {
-    border-radius: 100%;
+    border-radius: 50%;
 }
 
 .hexagon {
@@ -37,37 +100,10 @@
     );
 }
 
-/* =========================
-   GENERAL
-   ========================= */
 
-*,
-*::before,
-*::after {
-    box-sizing: border-box;
-}
-
-html,
-body {
-    margin: 0;
-    padding: 0;
-
-    font-family: "Roboto", sans-serif;
-    font-optical-sizing: auto;
-    font-weight: 500;
-    font-style: normal;
-    font-variation-settings:
-        "width" 100;
-}
-
-main {
-    width: 97.5vw;
-}
-
-
-/* =========================
+/* =========================================================
    HEADER
-   ========================= */
+   ========================================================= */
 
 .page-header {
     margin: 0;
@@ -75,7 +111,7 @@ main {
 }
 
 
-/* Background of header */
+/* Header background */
 
 .page-header-div {
     position: fixed;
@@ -83,15 +119,12 @@ main {
     top: 0;
     left: 0;
 
-    width: 100vw;
-    height: 58px;
-
-    margin: 0;
-    padding: 0;
+    width: 100%;
+    height: var(--header-height);
 
     background-color: transparent;
 
-    z-index: 149;
+    z-index: 1000;
 
     transition:
         background-color 0.3s ease,
@@ -102,103 +135,95 @@ main {
 /* Header when scrolling */
 
 body.scrolled .page-header-div {
-    background-color: rgba(255, 255, 255, 0.95);
+    background-color: var(--header-bg);
 
     box-shadow:
-        0 2px 10px rgba(0, 0, 0, 0.1);
+        0 2px 12px rgba(0, 0, 0, 0.1);
 }
 
 
-/* =========================
-   TITLE
-   ========================= */
-
-/* =========================
-   TITLE
-   ========================= */
-
-.title {
-    display: flex;
-
-    align-items: center;
-
-    position: fixed;
-
-    top: 15px;
-    left: 120px;
-
-    width: 100%;
-
-    margin: 0;
-
-    background: transparent;
-
-    font-size: 25px;
-
-    z-index: 150;
-
-    transition: color 0.3s ease;
-}
-
-/* Make the title link look like normal text */
-.title a {
-    color: #fff;
-    text-decoration: none;
-}
-
-.title a:visited {
-    color: #fff;
-}
-
-.title a:hover {
-    color: #fff;
-    text-decoration: none;
-}
-
-/* Title becomes blue when scrolling */
-body.scrolled .title a {
-    color: #3498db;
-}
-
-/* =========================
+/* =========================================================
    LOGO
-   ========================= */
+   ========================================================= */
 
 .logo {
-    display: flex;
-
-    gap: 10px;
-
     position: fixed;
 
     top: 5px;
     left: 60px;
 
-    z-index: 151;
-
     width: 50px;
     height: 50px;
+
+    object-fit: contain;
+
+    z-index: 1000;
+
+    transition:
+        width 0.3s ease,
+        height 0.3s ease,
+        left 0.3s ease;
 }
 
 
-/* =========================
-   HAMBURGER BUTTON
-   ========================= */
+/* =========================================================
+   TITLE
+   ========================================================= */
+
+.title {
+    position: fixed;
+
+    top: 0;
+    left: 120px;
+
+    height: var(--header-height);
+
+    margin: 0;
+
+    display: flex;
+    align-items: center;
+
+    z-index: 1060;
+
+    font-size: 25px;
+    font-weight: 700;
+
+    line-height: 1;
+}
+
+.title a {
+    color: var(--white);
+    text-decoration: none;
+
+    transition: color 0.3s ease;
+}
+
+body.scrolled .title a {
+    color: var(--blue);
+}
+
+.title a:hover {
+    color: var(--cyan);
+}
+
+
+/* =========================================================
+   HAMBURGER MENU
+   ========================================================= */
 
 .menu-btn {
     position: fixed;
 
-    top: 20px;
+    top: 17px;
     left: 20px;
 
-    width: 20px;
-    height: 20px;
+    width: 25px;
+    height: 26px;
 
-    margin-right: 20px;
     padding: 0;
 
-    background: none;
     border: none;
+    background: transparent;
 
     cursor: pointer;
 
@@ -206,14 +231,14 @@ body.scrolled .title a {
     flex-direction: column;
     justify-content: space-between;
 
-    z-index: 1000;
+    z-index: 1200;
 
-    transition:
-        transform 0.2s ease;
+    transition: transform 0.2s ease;
 }
 
-
-/* Hamburger bars */
+.menu-btn:hover {
+    transform: scale(1.08);
+}
 
 .menu-btn span {
     display: block;
@@ -221,44 +246,29 @@ body.scrolled .title a {
     width: 25px;
     height: 3px;
 
-    background: #fff;
+    background-color: var(--white);
 
     border-radius: 5px;
 
     transition:
-        transform 0.3s cubic-bezier(0.25, 0.8, 0.25, 1),
+        transform 0.3s ease,
         opacity 0.3s ease,
         background-color 0.3s ease;
 }
 
-
-/* Hamburger becomes black when scrolling */
-
 body.scrolled .menu-btn span {
-    background: #000;
-}
-
-
-/* =========================
-   HAMBURGER HOVER
-   ========================= */
-
-.menu-btn:hover {
-    transform: scale(1.05);
+    background-color: var(--black);
 }
 
 .menu-btn:hover span {
-    background: #3498db !important;
+    background-color: var(--blue) !important;
 }
 
 
-/* =========================
-   HAMBURGER → X
-   ========================= */
+/* Hamburger → X */
 
 .menu-btn.active span:nth-child(1) {
-    transform: translateY(8.5px) rotate(45deg);
-    color: black;
+    transform: translateY(11px) rotate(45deg);
 }
 
 .menu-btn.active span:nth-child(2) {
@@ -266,82 +276,81 @@ body.scrolled .menu-btn span {
 }
 
 .menu-btn.active span:nth-child(3) {
-    transform: translateY(-8.5px) rotate(-45deg);
-    color: black;
+    transform: translateY(-11px) rotate(-45deg);
 }
 
-/* Hamburger becomes black when sidebar is open */
 .menu-btn.active span {
-    background: #000;
+    background-color: var(--black);
 }
 
-/* =========================
+
+/* =========================================================
    SIDEBAR
-   ========================= */
+   ========================================================= */
 
 .sidebar {
     position: fixed;
 
     top: 0;
-    left: -225px;
+    left: -260px;
 
-    width: 175px;
+    width: 230px;
     height: 100vh;
 
-    padding: 60px 25px 25px;
+    padding: 75px 15px 30px;
 
-    background: #ffffff;
+    background-color: var(--white);
 
     box-shadow:
-        2px 0 10px rgba(0, 0, 0, 0.15);
+        4px 0 15px rgba(0, 0, 0, 0.15);
 
     overflow-y: auto;
 
-    z-index: 200;
+    z-index: 1050;
 
-    transition:
-        left 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+    transition: left 0.3s ease;
 }
-
-
-/* Sidebar open */
 
 .sidebar.active {
     left: 0;
 }
 
-
-/* =========================
-   SIDEBAR LINKS
-   ========================= */
-
 .sidebar a {
     display: block;
 
-    padding: 15px 20px;
+    width: 100%;
 
-    color: #000;
+    padding: 14px 18px;
+
+    margin-bottom: 3px;
+
+    color: var(--black);
 
     text-decoration: none;
 
     font-size: 16px;
+    font-weight: 500;
+
+    border-radius: 8px;
 
     transition:
-        all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+        background-color 0.25s ease,
+        color 0.25s ease,
+        padding-left 0.25s ease;
 }
 
 .sidebar a:hover {
-    background: #f2f2f2;
+    background-color: #f2f2f2;
 
-    padding-left: 30px;
+    color: var(--blue);
 
-    color: #3498db;
+    padding-left: 25px;
 }
 
 
-/* =========================
+/* =========================================================
    GREY OVERLAY
-   ========================= */
+   ========================================================= */
 
 #grey {
     position: fixed;
@@ -349,275 +358,226 @@ body.scrolled .menu-btn span {
     top: 0;
     left: 0;
 
-    width: 100vw;
+    width: 100%;
     height: 100vh;
 
-    background-color: rgba(0, 0, 0, 0);
+    background-color: transparent;
 
-    z-index: 199;
+    z-index: 1025;
 
     opacity: 0;
-
     visibility: hidden;
+    pointer-events: none;
 
     transition:
         opacity 0.3s ease,
-        background-color 0.3s ease;
+        background-color 0.3s ease,
+        visibility 0.3s ease;
 }
 
-
-/* Overlay visible */
-
 #grey.active {
-    background-color: rgba(0, 0, 0, 0.5);
+    background-color: var(--overlay-dark);
 
     opacity: 1;
 
     visibility: visible;
+
+    pointer-events: auto;
 }
 
 
-/* =========================
+/* =========================================================
    BANNER
-   ========================= */
+   ========================================================= */
 
 .banner-container {
     position: relative;
 
-    left: 0;
+    width: 100%;
 
     display: flex;
 
     justify-content: center;
     align-items: center;
 
-    color: white;
+    overflow: hidden;
 
-    margin: 0;
-    padding: 0;
+    color: var(--white);
 }
 
-
 .banner-container img {
-    display: block;
-
     width: 100%;
     height: auto;
 
-    margin: 0;
-    padding: 0;
+    min-height: 280px;
+
+    object-fit: cover;
 
     filter: brightness(50%);
 }
 
 
-/* =========================
-   BANNER TEXT
-   ========================= */
+/* Banner text */
 
 .banner-container .text-wrapper {
     position: absolute;
 
-    display: flex;
+    top: 50%;
+    left: 50%;
 
+    transform: translate(-50%, -50%);
+
+    width: 90%;
+
+    display: flex;
     flex-direction: column;
 
     align-items: center;
+    justify-content: center;
+
+    text-align: center;
 }
 
+.banner-container .text {
+    margin: 0 0 15px;
 
-.banner-container .text-wrapper .text {
-    font-size: 60px;
+    font-size: clamp(32px, 6vw, 60px);
 
-    font-family: "Roboto", sans-serif;
+    font-weight: 700;
 
-    font-weight: 500;
+    line-height: 1.1;
+
+    text-shadow:
+        0 3px 10px rgba(0, 0, 0, 0.5);
 }
 
-
-.banner-container .text-wrapper .box {
+.banner-container .box {
     width: 130px;
-    height: 10px;
+    height: 8px;
 
-    background-color: #00ffff;
+    background-color: var(--cyan);
+
+    border-radius: 10px;
+
+    box-shadow:
+        0 0 15px rgba(0, 229, 255, 0.5);
 }
 
 
-/* =========================
-   CONTENT
-   ========================= */
-
-main {
-    width: 100%;
-    max-width: 1200px;
-    margin: 0 auto;
-    box-sizing: border-box;
-}
+/* =========================================================
+   MAIN CONTENT
+   ========================================================= */
 
 .content {
-    position: relative;
-
     width: 100%;
-    max-width: 1200px;
+    max-width: var(--content-width);
 
     margin: 0 auto;
-    padding: 44px;
 
-    box-sizing: border-box;
-
-    top: auto;
-    left: auto;
+    padding: 50px 40px 30px;
 }
 
 
-/*
-.content.active {
-    left: 258px;
-}
-*/
-
-.images {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 30px;
-    width: 100%;
-
-    margin-top: 60px;
-    margin-bottom: 30px;
-}
-
-/* Animated rainbow border */
-@keyframes rainbowBorder {
-    0% {
-        border-image-source: linear-gradient(45deg, red, orange, yellow, green, cyan, blue, violet);
-    }
-    50% {
-        border-image-source: linear-gradient(225deg, violet, blue, cyan, green, yellow, orange, red);
-    }
-    100% {
-        border-image-source: linear-gradient(45deg, red, orange, yellow, green, cyan, blue, violet);
-    }
-}
-
-/* Animated rainbow glow */
-@keyframes rainbowGlow {
-    0% {
-        box-shadow: 0 0 20px rgba(255, 0, 0, 0.35);
-    }
-    20% {
-        box-shadow: 0 0 25px rgba(255, 165, 0, 0.35);
-    }
-    40% {
-        box-shadow: 0 0 30px rgba(255, 255, 0, 0.35);
-    }
-    60% {
-        box-shadow: 0 0 35px rgba(0, 255, 0, 0.35);
-    }
-    80% {
-        box-shadow: 0 0 40px rgba(0, 128, 255, 0.35);
-    }
-    100% {
-        box-shadow: 0 0 20px rgba(128, 0, 255, 0.35);
-    }
-}
-
-.icons {
-    width: 100%;
-    aspect-ratio: 1 / 1;
-    object-fit: cover;
-    border-radius: 10%;
-    cursor: pointer;
-
-    transition:
-        transform 0.45s cubic-bezier(0.22, 0.61, 0.36, 1),
-        box-shadow 0.6s ease;
-}
-
-.icons:hover {
-    transform: scale(1.06);
-
-    /* Animated rainbow glow only */
-    animation: rainbowGlow 2.5s linear infinite;
-}
-
+/* =========================================================
+   INTRO SECTION
+   ========================================================= */
 
 .intro-section {
+    width: 100%;
+
     display: flex;
 
     align-items: center;
 
-    gap: 60px;
+    justify-content: center;
 
-    width: 100%;
+    gap: 60px;
 }
+
+
+/* =========================================================
+   GALLERY
+   ========================================================= */
 
 .gallery {
     position: relative;
 
-    flex: 1;
+    flex: 1 1 500px;
 
     width: 100%;
     max-width: 500px;
 
     overflow: hidden;
+
     border-radius: 15px;
 
-    margin: 0;
-}
+    background-color: #f5f5f5;
 
-.intro-text {
-    flex: 1;
-
-    max-width: 500px;
-}
-
-.intro-text h2 {
-    font-size: 32px;
-    margin-top: 0;
-}
-
-.intro-text p {
-    font-size: 18px;
-    line-height: 1.7;
+    box-shadow: var(--shadow);
 }
 
 .gallery-track {
     display: flex;
 
-    transition: transform 0.5s ease;
+    width: 100%;
+
+    transition:
+        transform 0.5s ease;
 }
 
 .gallery-track img {
     flex: 0 0 100%;
+
     width: 100%;
 
-    height: 100%;
+    aspect-ratio: 1 / 1;
+
     object-fit: cover;
 }
+
+
+/* Gallery buttons */
 
 .gallery button {
     position: absolute;
 
     top: 50%;
+
     transform: translateY(-50%);
 
     width: 45px;
     height: 45px;
 
+    padding: 0;
+
     border: none;
+
     border-radius: 50%;
 
-    background: rgba(0, 0, 0, 0.5);
-    color: white;
+    background-color: rgba(0, 0, 0, 0.5);
+
+    color: var(--white);
 
     font-size: 20px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
     cursor: pointer;
 
-    transition: background 0.2s ease;
+    z-index: 5;
+
+    transition:
+        background-color 0.2s ease,
+        transform 0.2s ease;
 }
 
 .gallery button:hover {
-    background: rgba(0, 0, 0, 0.8);
+    background-color: rgba(0, 0, 0, 0.8);
+
+    transform: translateY(-50%) scale(1.08);
 }
 
 #prev {
@@ -626,4 +586,570 @@ main {
 
 #next {
     right: 15px;
+}
+
+
+/* =========================================================
+   INTRO TEXT
+   ========================================================= */
+
+.intro-text {
+    flex: 1 1 500px;
+
+    width: 100%;
+    max-width: 500px;
+}
+
+.intro-text h2 {
+    margin: 0 0 20px;
+
+    font-size: clamp(28px, 4vw, 36px);
+
+    line-height: 1.2;
+
+    color: var(--text);
+}
+
+.intro-text p {
+    margin: 0;
+
+    font-size: 18px;
+
+    line-height: 1.8;
+
+    color: var(--text-light);
+}
+
+
+/* =========================================================
+   HOBBY ICON GRID
+   ========================================================= */
+
+.images {
+    width: 100%;
+
+    display: grid;
+
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+
+    gap: 30px;
+
+    margin-top: 70px;
+    margin-bottom: 40px;
+}
+
+.icons {
+    width: 100%;
+
+    aspect-ratio: 1 / 1;
+
+    object-fit: cover;
+
+    border-radius: 10%;
+
+    cursor: pointer;
+
+    box-shadow:
+        0 4px 12px rgba(0, 0, 0, 0.1);
+
+    transition:
+        transform 0.35s ease,
+        box-shadow 0.5s ease;
+}
+
+.icons:hover {
+    transform: scale(1.05);
+
+    animation:
+        rainbowGlow 2.5s linear infinite;
+}
+
+
+/* =========================================================
+   RAINBOW GLOW
+   ========================================================= */
+
+@keyframes rainbowGlow {
+
+    0% {
+        box-shadow:
+            0 0 20px rgba(255, 0, 0, 0.35);
+    }
+
+    20% {
+        box-shadow:
+            0 0 25px rgba(255, 165, 0, 0.35);
+    }
+
+    40% {
+        box-shadow:
+            0 0 30px rgba(255, 255, 0, 0.35);
+    }
+
+    60% {
+        box-shadow:
+            0 0 35px rgba(0, 255, 0, 0.35);
+    }
+
+    80% {
+        box-shadow:
+            0 0 40px rgba(0, 128, 255, 0.35);
+    }
+
+    100% {
+        box-shadow:
+            0 0 20px rgba(128, 0, 255, 0.35);
+    }
+}
+
+
+/* =========================================================
+   FOOTER
+   ========================================================= */
+
+footer {
+    width: 100%;
+
+    text-align: center;
+
+    margin-top: 50px;
+    padding-bottom: 20px;
+}
+
+footer hr {
+    width: 100%;
+
+    margin: 0 0 20px;
+
+    border: 0;
+
+    border-top: 1px solid #dddddd;
+}
+
+footer p {
+    margin: 0;
+
+    color: #777777;
+
+    font-size: 14px;
+
+    line-height: 1.5;
+}
+
+
+/* =========================================================
+   TABLET
+   901px → 1100px
+   ========================================================= */
+
+@media (max-width: 1100px) {
+
+    .content {
+        padding-left: 30px;
+        padding-right: 30px;
+    }
+
+    .intro-section {
+        gap: 40px;
+    }
+
+    .images {
+        gap: 22px;
+    }
+}
+
+
+/* =========================================================
+   TABLET / SMALL LAPTOP
+   601px → 900px
+   ========================================================= */
+
+@media (max-width: 900px) {
+
+    /* Header */
+
+    .title {
+        left: 105px;
+
+        font-size: 22px;
+    }
+
+    .logo {
+        left: 55px;
+
+        width: 45px;
+        height: 45px;
+    }
+
+
+    /* Intro */
+
+    .intro-section {
+        flex-direction: column;
+
+        gap: 40px;
+
+        text-align: center;
+    }
+
+    .gallery {
+        flex: none;
+
+        width: min(100%, 600px);
+
+        max-width: 600px;
+    }
+
+    .intro-text {
+        flex: none;
+
+        width: 100%;
+        max-width: 700px;
+    }
+
+
+    /* Hobby grid */
+
+    .images {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+
+        gap: 25px;
+
+        margin-top: 55px;
+    }
+}
+
+
+/* =========================================================
+   MOBILE
+   401px → 600px
+   ========================================================= */
+
+@media (max-width: 600px) {
+
+    /* Header */
+
+    :root {
+        --header-height: 55px;
+    }
+
+    .page-header-div {
+        height: 55px;
+    }
+
+    .menu-btn {
+        top: 15px;
+        left: 15px;
+
+        width: 24px;
+        height: 25px;
+    }
+
+    .menu-btn span {
+        width: 24px;
+        height: 3px;
+    }
+
+    .logo {
+        top: 7px;
+        left: 52px;
+
+        width: 40px;
+        height: 40px;
+    }
+
+    .title {
+        top: 0;
+        left: 100px;
+
+        height: 55px;
+
+        font-size: 18px;
+
+        white-space: nowrap;
+    }
+
+
+    /* Sidebar */
+
+    .sidebar {
+        width: 240px;
+
+        left: -270px;
+
+        padding-top: 70px;
+    }
+
+
+    /* Banner */
+
+    .banner-container img {
+        min-height: 240px;
+
+        height: 45vw;
+
+        max-height: 350px;
+    }
+
+    .banner-container .text {
+        font-size: clamp(28px, 9vw, 48px);
+
+        margin-bottom: 12px;
+    }
+
+    .banner-container .box {
+        width: 90px;
+        height: 6px;
+    }
+
+
+    /* Content */
+
+    .content {
+        width: 100%;
+
+        padding: 35px 20px 25px;
+    }
+
+
+    /* Intro */
+
+    .intro-section {
+        gap: 30px;
+    }
+
+    .gallery {
+        width: 100%;
+
+        border-radius: 12px;
+    }
+
+    .gallery button {
+        width: 38px;
+        height: 38px;
+
+        font-size: 16px;
+    }
+
+    #prev {
+        left: 10px;
+    }
+
+    #next {
+        right: 10px;
+    }
+
+
+    /* Intro text */
+
+    .intro-text {
+        width: 100%;
+    }
+
+    .intro-text h2 {
+        font-size: 27px;
+
+        margin-bottom: 15px;
+    }
+
+    .intro-text p {
+        font-size: 16px;
+
+        line-height: 1.7;
+    }
+
+
+    /* Hobby grid */
+
+    .images {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+
+        gap: 18px;
+
+        margin-top: 45px;
+    }
+
+    .icons {
+        border-radius: 12%;
+    }
+
+
+    /* Footer */
+
+    footer {
+        margin-top: 35px;
+    }
+
+    footer p {
+        font-size: 13px;
+    }
+}
+
+
+/* =========================================================
+   SMALL MOBILE
+   320px → 400px
+   ========================================================= */
+
+@media (max-width: 400px) {
+
+    /* Header */
+
+    .menu-btn {
+        top: 15px;
+        left: 12px;
+
+        width: 22px;
+    }
+
+    .menu-btn span {
+        width: 22px;
+    }
+
+    .logo {
+        top: 9px;
+        left: 43px;
+
+        width: 36px;
+        height: 36px;
+    }
+
+    .title {
+        left: 88px;
+
+        font-size: 16px;
+    }
+
+
+    /* Banner */
+
+    .banner-container img {
+        min-height: 210px;
+    }
+
+    .banner-container .text {
+        font-size: 30px;
+    }
+
+    .banner-container .box {
+        width: 75px;
+        height: 5px;
+    }
+
+
+    /* Content */
+
+    .content {
+        padding: 30px 15px 20px;
+    }
+
+
+    /* Gallery */
+
+    .gallery button {
+        width: 34px;
+        height: 34px;
+
+        font-size: 14px;
+    }
+
+
+    /* Text */
+
+    .intro-text h2 {
+        font-size: 24px;
+    }
+
+    .intro-text p {
+        font-size: 15px;
+
+        line-height: 1.65;
+    }
+
+
+    /* Grid */
+
+    .images {
+        gap: 14px;
+
+        margin-top: 40px;
+    }
+}
+
+
+/* =========================================================
+   VERY SMALL DEVICES
+   ========================================================= */
+
+@media (max-width: 340px) {
+
+    .title {
+        left: 82px;
+
+        font-size: 15px;
+    }
+
+    .logo {
+        left: 40px;
+
+        width: 34px;
+        height: 34px;
+    }
+
+    .images {
+        gap: 10px;
+    }
+
+    .content {
+        padding-left: 12px;
+        padding-right: 12px;
+    }
+}
+
+
+/* =========================================================
+   TOUCH DEVICES
+   Remove hover scaling on touchscreens
+   ========================================================= */
+
+@media (hover: none) {
+
+    .icons:hover {
+        transform: none;
+
+        animation: none;
+    }
+
+    .gallery button:hover {
+        transform: translateY(-50%);
+        background-color: rgba(0, 0, 0, 0.5);
+    }
+
+    .sidebar a:hover {
+        padding-left: 18px;
+
+        background-color: transparent;
+
+        color: var(--black);
+    }
+}
+
+
+/* =========================================================
+   REDUCED MOTION
+   ========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+
+    html {
+        scroll-behavior: auto;
+    }
+
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
 }
