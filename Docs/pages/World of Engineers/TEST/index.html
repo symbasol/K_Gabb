@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WOD TEST</title>
+    <style>
+        html, body {
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            padding: 0px;
+            margin: 2px;
+        }
+
+        canvas {
+            height: 95%;
+            width: 98%;
+            background-color: aquamarine;
+        }
+
+        .HUD {
+            background-color: antiquewhite;
+        }
+    </style>
+</head>
+<body>
+    <div class="HUD">
+        <span id="FPS">FPS: </span>
+        <input type="checkbox" id="wireframe" name="wireframe" value="wireframe">
+        <label for="wireframe">Wireframe?</label>
+        
+        <!-- New range slider for subdivisions -->
+        <label for="subdivisions">Subdivisions:</label>
+        <input type="range" id="subdivisions" name="subdivisions" min="1" max="200" value="4">
+        <span id="subdivisionValue">4</span>
+        
+        <label>Octaves: <span id="octavesValue">8</span></label>
+        <input type="range" id="octaves" min="1" max="12" value="8">
+
+        <label>Persistence: <span id="persistenceValue">0.5</span></label>
+        <input type="range" id="persistence" min="0.1" max="0.9" step="0.01" value="0.5">
+
+        <label>Lacunarity: <span id="lacunarityValue">2.0</span></label>
+        <input type="range" id="lacunarity" min="1.0" max="4.0" step="0.1" value="2.0">
+
+        <label>Scale: <span id="scaleValue">0.1</span></label>
+        <input type="range" id="scale" min="0.01" max="1.0" step="0.01" value="0.1">
+
+        <label>Height: <span id="heightValue">1</span></label>
+        <input type="range" id="height" min="0.1" max="10" step="0.1" value="1">
+    </div>
+
+    <canvas id="testCanvas"></canvas>
+
+    <script src="https://cdn.babylonjs.com/babylon.js"></script>
+    <script type="module" src="src/main.js"></script>
+</body>
+</html>
